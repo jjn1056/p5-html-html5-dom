@@ -157,15 +157,73 @@ use common::sense;
 use mro 'c3';
 
 use XML::LibXML::Augment 0
-	-type  => 'Document',
-	-names => [HTML::HTML5::DOM->XHTML_NS.'*'];
+	'-type'  => 'Document',
+	'-names' => ['{'.HTML::HTML5::DOM->XHTML_NS.'}html'];
 
-sub body
+foreach my $elem (qw/body head/)
+{
+	*{$elem} = sub
+	{
+		my ($self) = @_;
+		my ($node1) = $self->getElementsByTagName($elem);
+		return $node1;
+	};
+	
+	HTML::HTML5::DOMutil::AutoDoc->add(
+		__PACKAGE__,
+		$elem,
+		"Returns the document ${elem}.",
+		);
+}
+
+{
+	my @things = (
+		[ images  => '//*[local-name()="img"]',    'images' ],
+		[ embeds  => '//*[local-name()="embed"]',  'C<< <embed> >> elements' ],
+		[ plugins => '//*[local-name()="embed"]',  'C<< <embed> >> elements' ],
+		[ links   => '//*[(local-name()="a" or local-name()="area") and @href]', 'C<< <a> >> and C<< <area> >> elements with an "href" attribute' ],
+		[ forms   => '//*[local-name()="form"]',   'forms' ],
+		[ scripts => '//*[local-name()="script"]', 'scripts' ],
+		);
+	foreach my $x (@things)
+	{
+		*{$x->[0]} = sub
+		{
+			my ($self) = @_;
+			my (@nodes) = $self->findnodes($x->[1]);
+			wantarray ? @nodes : HTML::HTML5::DOM::HTMLCollection->new(@nodes);
+		};
+		HTML::HTML5::DOMutil::AutoDoc->add(
+			__PACKAGE__,
+			$x->[0],
+			"Returns all $x->[2] found in the document.",
+			);		
+	}
+}
+
+sub compatMode
 {
 	my ($self) = @_;
-	my ($body) = $self->getElementsByTagName('body');
-	return $body;
+	if (UNIVERSAL::can('HTML::HTML5::Parser', 'can'))
+	{
+		if (HTML::HTML5::Parser->can('compat_mode'))
+		{
+			my $mode = HTML::HTML5::Parser->compat_mode($self);
+			return $mode if $mode;
+		}
+	}
+	return;
 }
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'compatMode',
+	"Returns the string 'quirks' or 'limited quirks' or undef.",
+	);
+
+package HTML::HTML5::DOM::HTMLCollection;
+
+use parent qw/XML::LibXML::NodeList/;
 
 package HTML::HTML5::DOM::HTMLElement;
 
@@ -1010,7 +1068,7 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 
 package HTML::HTML5::DOM::HTMLFormControlsCollection;
 
-use parent qw/XML::LibXML::NodeList/;
+use parent -norequire => qw/HTML::HTML5::DOM::HTMLCollection/;
 use URI::Escape qw//;
 
 sub namedItem
