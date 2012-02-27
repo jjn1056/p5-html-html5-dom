@@ -132,6 +132,9 @@ use constant XHTML_NS => 'http://www.w3.org/1999/xhtml';
 my $me;
 BEGIN { $me = bless {}, __PACKAGE__ }
 
+use DateTime qw//;
+use URI qw//;
+
 sub getDOMImplementation
 {
 	return $me;
@@ -146,7 +149,7 @@ sub hasFeature
 		qr{ ^ (Core) \s (1\.0|2\.0) $ }xi,
 		# Don't have all of HTML yet.
 		];
-		
+	
 	return ("${feature} ${version}" ~~ $have);
 }
 
@@ -159,6 +162,8 @@ use mro 'c3';
 use XML::LibXML::Augment 0
 	'-type'  => 'Document',
 	'-names' => ['{'.HTML::HTML5::DOM->XHTML_NS.'}html'];
+
+use Carp qw//;
 
 foreach my $elem (qw/body head/)
 {
@@ -181,7 +186,9 @@ foreach my $elem (qw/body head/)
 		[ images  => '//*[local-name()="img"]',    'images' ],
 		[ embeds  => '//*[local-name()="embed"]',  'C<< <embed> >> elements' ],
 		[ plugins => '//*[local-name()="embed"]',  'C<< <embed> >> elements' ],
+		[ applets => '//*[(local-name()="applet") or (local-name()="object" and @codetype="application/java")]', 'C<< <applet> >> elements (and C<< <object codetype="application/java"> >> elements)' ],
 		[ links   => '//*[(local-name()="a" or local-name()="area") and @href]', 'C<< <a> >> and C<< <area> >> elements with an "href" attribute' ],
+		[ anchors => '//*[local-name()="a" and @name]', 'C<< <a> >> with a "name" attribute' ],
 		[ forms   => '//*[local-name()="form"]',   'forms' ],
 		[ scripts => '//*[local-name()="script"]', 'scripts' ],
 		);
@@ -197,7 +204,7 @@ foreach my $elem (qw/body head/)
 			__PACKAGE__,
 			$x->[0],
 			"Returns all $x->[2] found in the document.",
-			);		
+			);
 	}
 }
 
@@ -221,6 +228,106 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 	"Returns the string 'quirks' or 'limited quirks' or undef.",
 	);
 
+sub URL
+{
+	my $self = shift;
+	$self->setURI(shift) if @_;
+	return URI->new($self->URI);
+}
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'URL',
+	"Get/set the document's URL.",
+	);
+
+sub domain
+{
+	(shift)->URL->host;
+}
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'domain',
+	"The documents URL's host name.",
+	);
+
+*cookie = *referrer = *referer = sub { q() };
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'cookie',
+	"Ostensibly returns cookies associated with the document, but in this implementation always returns an empty string.",
+	);
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'referrer',
+	"Ostensibly returns the HTTP referer for the document, but in this implementation always returns an empty string.",
+	);
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'referer',
+	"An alias for 'referrer' provided for the benefit of those who learnt to spell by reading HTTP RFCs.",
+	);
+
+sub lastModified
+{
+	return DateTime->now;
+}
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'lastModified',
+	"Ostensibly returns the HTTP Last-Modified date for the document, but this implementation always returns the current date and time. Returns a L<DateTime> object.",
+	);
+	
+*charset = *characterSet = *defaultCharset = sub { die "TODO" };
+
+sub readyState
+{
+	'complete';
+}
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'lastModified',
+	"Ostensibly returns the current document readiness, but this implementation always returns the string 'complete'.",
+	);
+
+sub title
+{
+	my ($self) = @_;
+	my ($title) = $self->getElementsByTagName('title')->get_index(1)->textContent;
+	$title =~ s/\s+/ /g;
+	$title =~ s/(^\s|\s$)//g;
+	return $title;
+}
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'title',
+	"Returns the document's title, from its C<< <title> >> element, with a little whitespace canonicalisation.",
+	);
+
+our $AUTOLOAD;
+sub AUTOLOAD
+{
+	my $self = shift;
+	my ($func) = ($AUTOLOAD =~ m{ :: (\w+) $ }x);
+	if ($func)
+	{
+		my $coderef = HTML::HTML5::DOM::HTMLHtmlElement->can($func);
+		if ($coderef)
+		{
+			unshift @_, $self->documentElement;
+			goto $coderef;
+		}
+	}
+	Carp::croak "Method '$AUTOLOAD' could not be autoloaded";
+}
+
 package HTML::HTML5::DOM::HTMLCollection;
 
 use parent qw/XML::LibXML::NodeList/;
@@ -240,8 +347,8 @@ BEGIN {
 			section small strong sub summary sup u var wbr/;
 }
 
-use List::Util 0 qw/first/;
-use Scalar::Util 0 qw/blessed/;
+use List::Util 0 qw//;
+use Scalar::Util 0 qw//;
 use XML::LibXML 1.91;
 use XML::LibXML::Augment 0 -names => [@ELEMENTS];
 use XML::LibXML::QuerySelector 0;
@@ -378,14 +485,14 @@ sub _mk_url_decomposition
 	my ($class, $via, $bits) = @_;
 	$via  ||= 'href';
 	$bits ||= {
-		protocol   => 'scheme',
-		host       => 'host_port',
-		hostname   => 'host',
-		port       => 'port',
-		pathname   => 'path',
-		search     => 'query',
-		hash       => 'fragment',
-	};
+		protocol => 'scheme',
+		host     => 'host_port',
+		hostname => 'host',
+		port     => 'port',
+		pathname => 'path',
+		search   => 'query',
+		hash     => 'fragment',
+		};
 	foreach my $bit (keys %$bits)
 	{
 		my $method = $bits->{$bit};
@@ -464,7 +571,7 @@ sub _mk_form_methods
 				return $form if $form;
 			}
 			return
-				first { $_->nodeName eq 'form' }
+				List::Util::first { $_->nodeName eq 'form' }
 				$self->wm_ancestors;
 		};
 		HTML::HTML5::DOMutil::AutoDoc->add(
@@ -513,7 +620,7 @@ sub wm_ancestors
 	my ($self) = @_;
 	my $x = $self->parentNode;
 	my @rv;
-	while (defined $x and blessed $x and $x->isa('XML::LibXML::Element'))
+	while (defined $x and Scalar::Util::blessed $x and $x->isa('XML::LibXML::Element'))
 	{
 		push @rv, $x;
 		$x = $x->parentNode;
