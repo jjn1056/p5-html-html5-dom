@@ -51,6 +51,16 @@ Methods which return a list usually return a normal Perl list when called
 in list context, and an XML::LibXML::NodeList (or a subclass of that) when
 called in list context.
 
+Methods that return a URI generally return one blessed into the L<URI>
+class.
+
+Methods that return a datetime, generally return one blessed into the
+L<DateTime> class.
+
+Methods that result in hypertext navigation (e.g. clicking a link or
+submitting a form) generally return a L<Web::Magic> object (which is
+basically an HTTP request waiting to happen).
+
 =head1 TODO
 
 =over
@@ -94,6 +104,8 @@ L<http://www.w3.org/TR/DOM-Level-2-HTML/html.html>.
 =item * L<HTML::HTML5::DOM::HTMLButtonElement>
 
 =item * L<HTML::HTML5::DOM::HTMLCanvasElement>
+
+=item * L<HTML::HTML5::DOM::HTMLCollection>
 
 =item * L<HTML::HTML5::DOM::HTMLCommandElement>
 
