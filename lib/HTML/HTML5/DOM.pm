@@ -129,6 +129,27 @@ use mro 'c3';
 
 use constant XHTML_NS => 'http://www.w3.org/1999/xhtml';
 
+my $me;
+BEGIN { $me = bless {}, __PACKAGE__ }
+
+sub getDOMImplementation
+{
+	return $me;
+}
+
+sub hasFeature
+{
+	my ($self, $feature, $version) = @_;
+	
+	my $have = [
+		qr{ ^ (XML) \s (1\.0|2\.0) $ }xi,
+		qr{ ^ (Core) \s (1\.0|2\.0) $ }xi,
+		# Don't have all of HTML yet.
+		];
+		
+	return ("${feature} ${version}" ~~ $have);
+}
+
 package HTML::HTML5::DOM::HTMLDocument;
 
 use 5.010;
