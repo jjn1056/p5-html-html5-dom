@@ -1460,8 +1460,22 @@ use XML::LibXML::Augment 0
 	-names => [@ELEMENTS],
 	-isa   => ['HTML::HTML5::DOM::HTMLElement'];
 
+__PACKAGE__->_mk_attribute_accessors(
+	qw/accept alt max min multiple==boolean pattern placeholder
+	required==boolean size src==URI step autocomplete type
+	dirName=dirname autofocus==boolean checked==boolean width
+	maxLength=maxlength height name readOnly=readonly=boolean/
+	);
 __PACKAGE__->_mk_labels_method;
 __PACKAGE__->_mk_form_methods;
+
+*indeterminate =
+*list =
+*valueAsDate =
+*valueAsNumber =
+*stepUp =
+*stepDown =
+	sub { die 'TODO' };
 
 sub wm_wwwFormPair
 {
