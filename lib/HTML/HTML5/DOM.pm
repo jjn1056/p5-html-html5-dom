@@ -615,6 +615,48 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 	'The world-famous C<getElementById> method.',
 	);
 
+*getElementsById = \&getElementById; # common typo
+
+sub getElementsByClassName
+{
+	my $self = shift;
+	my $conditions = join q{ or },
+		map { "contains(concat(' ', normalize-space(\@class), ' '), ' $_ ')" }
+		@_;
+	my @rv = $self->findnodes("*[$conditions]");
+	return wantarray ? @rv : HTML::HTML5::DOM::HTMLCollection->new(@rv);
+}
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'getElementsByClassName',
+	'Given one or more class names, returns a list of elements bearing those classes.',
+	);
+
+sub outerHTML
+{
+	(shift)->toString
+}
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'outerHTML',
+	'Currently just an alias for toString but should eventually work as a get/set method.',
+	);
+
+sub innerHTML
+{
+	join q{},
+	map { $_->toString }
+	$self->childNodes	
+}
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'innerHTML',
+	'Currently just calls toString on all child nodes and concatenates the result, but should eventually work as a get/set method.',
+	);
+
 sub wm_ancestors
 {
 	my ($self) = @_;
@@ -625,7 +667,7 @@ sub wm_ancestors
 		push @rv, $x;
 		$x = $x->parentNode;
 	}
-	return wantarray ? @rv : XML::LibXML::NodeList->new(@rv);
+	return wantarray ? @rv : HTML::HTML5::DOM::HTMLCollection->new(@rv);
 }
 
 HTML::HTML5::DOMutil::AutoDoc->add(
@@ -678,6 +720,22 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 	'dataset',
 	'Gets a hashref based on C<< data-foo >> attributes.',
 	);
+
+package HTML::HTML5::DOM::HTMLUnknownElement;
+
+use 5.010;
+use common::sense;
+use mro 'c3';
+
+our @ELEMENTS;
+BEGIN {
+	@ELEMENTS = map { sprintf('{%s}%s', HTML::HTML5::DOM->XHTML_NS, $_) }
+		qw/*/;
+}
+
+use XML::LibXML::Augment 0
+	-names => [@ELEMENTS],
+	-isa   => ['HTML::HTML5::DOM::HTMLElement'];
 
 package HTML::HTML5::DOM::HTMLAnchorElement;
 
