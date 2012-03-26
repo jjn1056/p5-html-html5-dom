@@ -153,6 +153,24 @@ sub hasFeature
 	return ("${feature} ${version}" ~~ $have);
 }
 
+sub parseString
+{
+	my ($self, $string) = @_;
+	my $dom = HTML::HTML5::Parser->new->parse_string($string);
+	XML::LibXML::Augment->upgrade($dom);
+	return $dom;
+}
+
+sub parse
+{
+	my ($self, $file) = @_;
+	my $dom = (ref $file =~ /^IO\b/)
+		? HTML::HTML5::Parser->new->parse_fh($file)
+		: HTML::HTML5::Parser->new->parse_file($file);
+	XML::LibXML::Augment->upgrade($dom);
+	return $dom;
+}
+
 package HTML::HTML5::DOM::HTMLDocument;
 
 use 5.010;

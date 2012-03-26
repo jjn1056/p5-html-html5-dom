@@ -61,11 +61,35 @@ Methods that result in hypertext navigation (e.g. clicking a link or
 submitting a form) generally return a L<Web::Magic> object (which is
 basically an HTTP request waiting to happen).
 
-=head1 TODO
+=head2 HTML::HTML5::DOM class methods
+
+While most of the interesting stuff is in L<HTML::HTML5::DOM::HTMLElement>
+and other classes like that, the HTML::HTML5::DOM package itself provides a
+handful of methods of its own.
 
 =over
 
-=item * provide a more convenient way to instantiate an HTMLDocument.
+=item * C<< getDOMImplementation >>
+
+Gets a singleton object blessed into the HTML::HTML5::DOM class.
+
+=item * C<< hasFeature >>
+
+Given a feature and version, returns true if the feature is supported.
+
+  my $impl = HTML::HTML5::DOM->getDOMImplementation;
+  if ($impl->hasFeature('Core', '2.0')) {
+    # ... do stuff
+  }
+
+=item * C<< parse >>
+
+Given a file handle, file name or URL (as a string or L<URI> object),
+parses the file, returning an L<HTML::HTML5::DOM::HTMLDocument> object.
+
+=item * C<< parseString >>
+
+As per C<parse>, but parses a string.
 
 =back
 
