@@ -257,7 +257,9 @@ B<"Friends":>
 L<XML::LibXML>,
 L<XML::LibXML::Augment>,
 L<HTML::HTML5::Parser>,
-L<HTML::HTML5::Writer>.
+L<HTML::HTML5::Writer>,
+L<HTML::HTML5::ToText>,
+L<HTML::HTML5::Builder>.
 
 B<"Rivals":>
 L<HTML::DOM>,
