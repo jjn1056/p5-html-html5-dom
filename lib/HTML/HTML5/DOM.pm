@@ -347,9 +347,11 @@ BEGIN {
 			section small strong sub summary sup u var wbr/;
 }
 
+use HTML::HTML5::Parser 0.110;
+use HTML::HTML5::Writer 0.104;
 use List::Util 0 qw//;
 use Scalar::Util 0 qw//;
-use XML::LibXML 1.91;
+use XML::LibXML 1.91 qw/:all/;
 use XML::LibXML::Augment 0 -names => [@ELEMENTS];
 use XML::LibXML::QuerySelector 0;
 
@@ -418,14 +420,19 @@ sub _mk_attribute_accessors
 		{
 			*{"$class\::$subname"} = sub
 			{
-				(shift)->textContent;
-				# TODO: setter
+				my $self = shift;
+				if (@_)
+				{
+					$self->removeChildNodes;
+					$self->appendText(join qq(\n), @_);
+				}
+				$self->textContent;
 			};
 			HTML::HTML5::DOMutil::AutoDoc->add(
 				$class,
 				$subname,
 				sprintf(
-					'Alias for C<< $elem->textContent >>.',
+					'Called with no arguments, acts as an alias for C<< $elem->textContent >>. Called with an arguments, sets the content for the element. Any existing content will be overwritten. If multiple arguments are provided, they\'ll be joined using "\n".',
 					),
 				);
 		}
@@ -635,26 +642,81 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 
 sub outerHTML
 {
-	(shift)->toString
+	my $self = shift;
+	
+	if (@_)
+	{
+		my $parser = HTML::HTML5::Parser->new;
+		if ($self->parentNode and $self->parentNode->nodeType==XML_ELEMENT_NODE)
+		{
+			my @nodes = $parser->parse_balanced_chunk(
+				(join qq(\n), @_),
+				{ within => $self->parentNode->nodeName, as => 'list' },
+				);
+			$self->parentNode->insertBefore($_, $self) for @nodes;
+			$self->parentNode->removeChild($self);
+		}
+		else
+		{
+			$self
+				-> ownerDocument
+				-> setDocumentElement(
+					$parser->parse_string(join qq(\n), @_)->documentElement
+					);
+		}
+		return join qq(\n), @_;
+	}
+	
+	my $writer = HTML::HTML5::Writer->new(markup => 'html', polyglot => 1);
+	$writer->element($self);
 }
 
 HTML::HTML5::DOMutil::AutoDoc->add(
 	__PACKAGE__,
 	'outerHTML',
-	'Currently just an alias for toString but should eventually work as a get/set method.',
+	'As per innerHTML, but includes the element itself. Can be used as a setter, but that\'s a bit of a weird thing to do.',
 	);
 
 sub innerHTML
 {
+	my $self = shift;
+	if (@_)
+	{
+		my $parser = HTML::HTML5::Parser->new;
+		my @nodes  = $parser->parse_balanced_chunk(
+			(join qq(\n), @_),
+			{ within => $self->nodeName, as => 'list' },
+			);
+		$self->removeChildNodes;
+		$self->appendChild($_) for @nodes;
+	}
+	
+	my $writer;
 	join q{},
-	map { $_->toString }
-	$self->childNodes	
+		map
+		{ 
+			$writer ||= HTML::HTML5::Writer->new(markup => 'html', polyglot => 1);
+			
+			if ($_->nodeType == XML_ELEMENT_NODE)
+			{
+				$writer->element($_)
+			}
+			elsif ($_->nodeType == XML_TEXT_NODE)
+			{
+				$writer->text($_)
+			}
+			else
+			{
+				$_->toString
+			}
+		}
+		$self->childNodes	
 }
 
 HTML::HTML5::DOMutil::AutoDoc->add(
 	__PACKAGE__,
 	'innerHTML',
-	'Currently just calls toString on all child nodes and concatenates the result, but should eventually work as a get/set method.',
+	'When called without arguments, serialises the contents of the element (but not the element itself) to a single string. When called with a string argument, parses the string as HTML and uses it to set the content of this element. When possible, attempts to use polyglot HTML (i.e. markup that works as HTML and XHTML).',
 	);
 
 sub wm_ancestors
@@ -688,7 +750,7 @@ sub wm_contains
 
 HTML::HTML5::DOMutil::AutoDoc->add(
 	__PACKAGE__,
-	'wm_ancestors',
+	'wm_contains',
 	'Given an argument, returns true if that argument is an element nested within this element.',
 	);
 
