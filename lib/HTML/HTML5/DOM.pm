@@ -300,8 +300,49 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 	'lastModified',
 	"Ostensibly returns the HTTP Last-Modified date for the document, but this implementation always returns the current date and time. Returns a L<DateTime> object.",
 	);
+
+{
+	my $cs = HTML::HTML::Parser->can('charset');
 	
-*charset = *characterSet = *defaultCharset = sub { die "TODO" };
+	sub charset
+	{
+		my $self = @_;
+		if (@_)
+		{
+			$self->setEncoding(@_);
+		}
+		return $self->encoding;
+	}
+
+	HTML::HTML5::DOMutil::AutoDoc->add(
+		__PACKAGE__,
+		'charset',
+		"Getter/setter for the document encoding.",
+		);
+
+	sub defaultCharset
+	{
+		return 'utf-8';
+	}
+
+	HTML::HTML5::DOMutil::AutoDoc->add(
+		__PACKAGE__,
+		'defaultCharset',
+		"Returns the string 'utf-8'.",
+		);
+
+	sub characterSet
+	{
+		return unless $cs;
+		return $cs->( shift );
+	}
+	
+	HTML::HTML5::DOMutil::AutoDoc->add(
+		__PACKAGE__,
+		'characterSet',
+		"Returns the character set that the document was parsed as (if known). As C<charset> can be used as a setter, this is not necessarily the same as C<charset>.",
+		);
+}
 
 sub readyState
 {
