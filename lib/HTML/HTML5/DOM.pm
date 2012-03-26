@@ -346,6 +346,12 @@ sub AUTOLOAD
 	Carp::croak "Method '$AUTOLOAD' could not be autoloaded";
 }
 
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'AUTOLOAD',
+	"See L<perlsub> if you don't know the significance of the AUTOLOAD function. HTML::HTML5::DOM::HTMLDocument will pass through unknown menthods to the document's root element. So for example, C<< $document->setAttribute >> will actually set an attribute on the document's root element.",
+	);
+
 package HTML::HTML5::DOM::HTMLCollection;
 
 use parent qw/XML::LibXML::NodeList/;
