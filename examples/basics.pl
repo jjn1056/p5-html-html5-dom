@@ -1,21 +1,6 @@
+use 5.010;
 use lib "lib";
 
-package XML::LibXML::Element;
-use Scalar::Util qw/blessed/;
-use overload 'eq' => '_isSameNodeLax', '==' => '_isSameNodeLax';
-sub _isSameNodeLax
-{
-	my ($self, $other) = @_;
-	if (UNIVERSAL::can($other, 'isa')
-	and $other->isa('XML::LibXML::Element'))
-	{
-		 return $self->isSameNode($other);
-	}
-	return;
-}
-
-package main;
-use 5.010;
 use Web::Magic;
 use HTML::HTML5::DOM;
 use HTML::HTML5::Parser;
@@ -32,6 +17,10 @@ say $dom->links->[0]->host;
 say $dom->getElementsByTagName('input')->[0]->labels->[0]->textContent;
 say $dom->getElementsByTagName('input')->[1]->formMethod;
 
+$dom->body->innerHTML("<h1>Form Example!</h1>",$dom->body->innerHTML);
+$dom->getElementsByTagName('a')->[0]->outerHTML('<b>MONKEYS</b>');
+
+print $dom->documentElement->innerHTML;
 
 __DATA__
 
