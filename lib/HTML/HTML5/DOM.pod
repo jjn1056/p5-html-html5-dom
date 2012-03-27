@@ -82,6 +82,19 @@ Given a feature and version, returns true if the feature is supported.
     # ... do stuff
   }
 
+=item * C<< registerFeature >>
+
+Experimental method to extend HTML::HTML5::DOM.
+
+  my $monkey = HTML::HTML5::DOMutil::Feature->new(Monkey => '1.0');
+  $monkey->add_sub(
+    HTMLElement => 'talk',
+    sub { print "screech!\n" },
+  );
+  $impl->registerFeature($monkey);
+  
+  $element->talk if $impl->hasFeature(Monkey => '1.0');
+
 =item * C<< parse >>
 
 Given a file handle, file name or URL (as a string or L<URI> object),

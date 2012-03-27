@@ -121,6 +121,85 @@ sub _pod_methods :Capture
 	psay q{=back};
 }
 
+package HTML::HTML5::DOMutil::Feature;
+
+use common::sense;
+use Carp qw[carp];
+use Scalar::Util qw[blessed];
+use overload q[~~] => 'smart_match';
+
+sub new
+{
+	my $class = shift;
+	die "Usage: new(NAME, VERSION)" unless @_==2;
+	bless [@_], $class;
+}
+
+sub feature_name
+{
+	lc(shift->[0]);
+}
+
+sub feature_version
+{
+	0+(shift->[1]);
+}
+
+sub subs
+{
+	my $self = shift;
+	@$self[2 .. $#$self];
+}
+
+sub add_sub
+{
+	my ($self, $class, $name, $coderef) = @_;
+	push @$self, {
+		class     => $class,
+		name      => $name,
+		coderef   => $coderef,
+		};
+}
+
+sub install_subs
+{
+	my $self = shift;
+	for ($self->subs)
+	{
+		my ($class, $name, $coderef) = @$_{qw(class name coderef)};
+		$class = 'HTML::HTML5::DOM::'.$class unless $class =~ /::/;
+		if ($class->can($name))
+		{
+			carp "$class already has a method called $name. Not replacing.";
+		}
+		else
+		{
+			*{"$class\::$name"} = $coderef;
+		}
+	}
+}
+
+sub smart_match
+{
+	my ($self, $test, $swap) = @_;
+	($test, $self) = ($self, $test) if $swap;
+	
+	my ($test_name, $test_version) = do {
+		if (ref $test eq 'ARRAY')
+			{ @$test }
+		elsif (blessed $test and $test->isa(__PACKAGE__))
+			{ ($test->feature_name, $test->feature_version) }
+		elsif (!ref $test)
+			{ split /\s+/, $test }
+		else
+			{ () }
+	} or return;
+	
+	return unless $self->feature_name eq lc($test_name);
+	return if defined $test_version and $test_version > $self->feature_version;
+	return 1;
+}
+
 package HTML::HTML5::DOM;
 
 use 5.010;
@@ -140,17 +219,23 @@ sub getDOMImplementation
 	return $me;
 }
 
+our @FEATURES = (
+	HTML::HTML5::DOMutil::Feature->new(XML   => '2.0'),
+	HTML::HTML5::DOMutil::Feature->new(Core  => '2.0'),
+	);
+
 sub hasFeature
 {
-	my ($self, $feature, $version) = @_;
-	
-	my $have = [
-		qr{ ^ (XML) \s (1\.0|2\.0) $ }xi,
-		qr{ ^ (Core) \s (1\.0|2\.0) $ }xi,
-		# Don't have all of HTML yet.
-		];
-	
-	return ("${feature} ${version}" ~~ $have);
+	my $self = shift;
+	my $test = \@_;
+	grep { $_ ~~ $test } @FEATURES;
+}
+
+sub registerFeature
+{
+	my ($class, $feature) = @_;
+	push @FEATURES, $feature;
+	$feature->install_subs;
 }
 
 sub parseString
@@ -390,7 +475,7 @@ sub AUTOLOAD
 HTML::HTML5::DOMutil::AutoDoc->add(
 	__PACKAGE__,
 	'AUTOLOAD',
-	"See L<perlsub> if you don't know the significance of the AUTOLOAD function. HTML::HTML5::DOM::HTMLDocument will pass through unknown menthods to the document's root element. So for example, C<< $document->setAttribute >> will actually set an attribute on the document's root element.",
+	"See L<perlsub> if you don't know the significance of the AUTOLOAD function. HTML::HTML5::DOM::HTMLDocument will pass through unknown menthods to the document's root element. So for example, C<< \$document->setAttribute >> will actually set an attribute on the document's root element.",
 	);
 
 package HTML::HTML5::DOM::HTMLCollection;
