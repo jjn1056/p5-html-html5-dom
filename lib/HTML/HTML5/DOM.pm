@@ -126,7 +126,12 @@ package HTML::HTML5::DOMutil::Feature;
 use common::sense;
 use Carp qw[carp];
 use Scalar::Util qw[blessed];
-use overload q[~~] => 'smart_match';
+use overload
+	q[~~]    => 'smart_match',
+	q[""]    => 'to_string',
+	q[bool]  => sub { 1 },
+	fallback => 1,
+	;
 
 sub new
 {
@@ -179,6 +184,12 @@ sub install_subs
 	}
 }
 
+sub to_string
+{
+	my $self = shift;
+	sprintf('%s %s', $self->feature_name, $self->feature_version);
+}
+
 sub smart_match
 {
 	my ($self, $test, $swap) = @_;
@@ -220,9 +231,19 @@ sub getDOMImplementation
 }
 
 our @FEATURES = (
-	HTML::HTML5::DOMutil::Feature->new(XML   => '2.0'),
-	HTML::HTML5::DOMutil::Feature->new(Core  => '2.0'),
+	HTML::HTML5::DOMutil::Feature->new(Core       => '2.0'),
+	HTML::HTML5::DOMutil::Feature->new(XML        => '2.0'),
+	HTML::HTML5::DOMutil::Feature->new(XMLVersion => '1.1'),
+	HTML::HTML5::DOMutil::Feature->new(HTML       => '2.0'),
+	HTML::HTML5::DOMutil::Feature->new(XHTML      => '2.0'),
 	);
+
+sub getFeature
+{
+	my $self = shift;
+	my @has  = $self->hasFeature(@_);
+	@has ? $has[0] : undef;
+}
 
 sub hasFeature
 {
@@ -454,6 +475,14 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 	'title',
 	"Returns the document's title, from its C<< <title> >> element, with a little whitespace canonicalisation.",
 	);
+
+sub xmlVersion
+{
+	my $self = shift;
+	return undef
+		if defined HTML::HTML5::Parser->source_line($self);
+	return $self->version;
+}
 
 our $AUTOLOAD;
 sub AUTOLOAD
