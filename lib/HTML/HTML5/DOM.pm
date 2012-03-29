@@ -61,14 +61,14 @@ sub _pod_elements :Capture
 
 	psay
 		q{=head2 HTML Elements},
-		q{This class applies to the following elements.},
+		q{This class applies to the following HTML elements.},
 		q{=over};
 	
 	my $elements = \@{"$package\::ELEMENTS"};
 	
 	foreach my $element (sort @$elements)
 	{
-		psay "=item * C<< $element >>";
+		psay qq{=item * C<< $element >>};
 	}
 	
 	psay q{=back};
@@ -80,12 +80,13 @@ sub _pod_isa :Capture
 
 	psay
 		q{=head2 Inheritance},
-		q{This class inherits methods from the following Perl classes.},
+		qq{$package inherits methods from the following Perl classes.},
 		q{=over};
 	
 	foreach my $parent (@{ mro::get_linear_isa($package) })
 	{
-		psay "=item * L<$parent>";
+		next if $parent eq $package;
+		psay qq{=item * L<$parent>};
 	}
 	
 	psay q{=back};
@@ -114,7 +115,7 @@ sub _pod_methods :Capture
 	foreach my $meth (sort keys %$docs)
 	{
 		psay
-			"=item * C<< $meth >>",
+			qq{=item * C<< $meth >>},
 			$docs->{$meth};
 	}
 	
@@ -136,7 +137,7 @@ use overload
 sub new
 {
 	my $class = shift;
-	die "Usage: new(NAME, VERSION)" unless @_==2;
+	die sprintf("Usage: %s->new(\$name, \$version)", __PACKAGE__) unless @_==2;
 	bless [@_], $class;
 }
 
@@ -261,20 +262,60 @@ sub registerFeature
 
 sub parseString
 {
-	my ($self, $string) = @_;
-	my $dom = HTML::HTML5::Parser->new->parse_string($string);
+	my ($self, $string, %options) = @_;
+	my $pclass = $options{using} =~ /libxml/i ? 'XML::LibXML' : 'HTML::HTML5::Parser';
+	my $dom = $pclass->new->parse_string($string);
 	XML::LibXML::Augment->upgrade($dom);
 	return $dom;
 }
 
 sub parse
 {
-	my ($self, $file) = @_;
+	my ($self, $file, %options) = @_;
+	my $pclass = $options{using} =~ /libxml/i ? 'XML::LibXML' : 'HTML::HTML5::Parser';
 	my $dom = (ref $file =~ /^IO\b/)
-		? HTML::HTML5::Parser->new->parse_fh($file)
-		: HTML::HTML5::Parser->new->parse_file($file);
+		? $pclass->new->parse_fh($file)
+		: $pclass->new->parse_file($file);
 	XML::LibXML::Augment->upgrade($dom);
 	return $dom;
+}
+
+sub createDocument
+{
+	my $self = shift;
+	die "Can only be used to create HTML documents."
+		unless (shift//XHTML_NS) eq XHTML_NS;
+	die "Can only be used to create HTML documents."
+		unless lc(shift//'html') eq 'html';	
+	my $dtd = shift//$self->createDocumentType;
+	$dtd = $dtd->toString if ref $dtd;
+	my $html = "$dtd<html><head></head><body></body></html>";
+	my $dom  = $self->parseString($html);
+	$dom->setURI('about:blank');
+	return $dom;
+}
+
+sub createDocumentType
+{
+	my ($self, $qname, $public, $system) = @_;
+	$qname ||= 'html';
+	
+	if ($public and $system)
+	{
+		return sprintf('<!DOCTYPE %s PUBLIC "%s" "%s">', $qname, $public, $system);
+	}
+
+	elsif ($public)
+	{
+		return sprintf('<!DOCTYPE %s PUBLIC "%s">', $qname, $public);
+	}
+
+	elsif ($system)
+	{
+		return sprintf('<!DOCTYPE %s PUBLIC "%s">', $qname, $system);
+	}
+
+	return sprintf('<!DOCTYPE %s>', $qname);
 }
 
 package HTML::HTML5::DOM::HTMLDocument;
@@ -359,10 +400,18 @@ sub URL
 	return URI->new($self->URI);
 }
 
+*documentURI = \&URL;
+
 HTML::HTML5::DOMutil::AutoDoc->add(
 	__PACKAGE__,
 	'URL',
 	"Get/set the document's URL.",
+	);
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'documentURI',
+	"Alias for C<URL>.",
 	);
 
 sub domain
@@ -476,6 +525,21 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 	"Returns the document's title, from its C<< <title> >> element, with a little whitespace canonicalisation.",
 	);
 
+sub getElementById
+{
+	my ($self, $id) = @_;
+	my @nodes = $self->findnodes("*[\@id=\"$id\"]");
+	return $nodes[0];
+}
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'getElementById',
+	'The world-famous C<getElementById> method. The default XML::LibXML implementation of this does not work with HTML::HTML5::Parser documents, because HTML::HTML5::Parser lacks the ability to inform libxml which element to use as an ID. (libxml defaults to xml:id.) This implementation is XPath-based, thus slower.',
+	);
+
+*getElementsById = \&getElementById; # common typo
+
 sub xmlVersion
 {
 	my $self = shift;
@@ -483,6 +547,12 @@ sub xmlVersion
 		if defined HTML::HTML5::Parser->source_line($self);
 	return $self->version;
 }
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'xmlVersion',
+	"Returrns undef for documents parsed using an HTML parser; 1.0 or 1.1 if parsed using libxml.",
+	);
 
 our $AUTOLOAD;
 sub AUTOLOAD
@@ -506,6 +576,67 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 	'AUTOLOAD',
 	"See L<perlsub> if you don't know the significance of the AUTOLOAD function. HTML::HTML5::DOM::HTMLDocument will pass through unknown menthods to the document's root element. So for example, C<< \$document->setAttribute >> will actually set an attribute on the document's root element.",
 	);
+
+sub implementation { HTML::HTML5::DOM->getDOMImplementation }
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'implementation',
+	"Returns the same as HTML::HTML5::DOM->getDOMImplementation.",
+	);
+
+sub xmlStandalone
+{
+	my $self = shift;
+	$self->setStandalone(@_) if @_;
+	$self->standalone;
+}
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'xmlStandalone',
+	"Called with an argument, acts as C<setStandalone>; called without an argument, acts as C<standalone>.",
+	);
+
+sub strictErrorChecking { return; }
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'strictErrorChecking',
+	"DOM seems a little vague as to what exactly constitutes 'strict'. This returns false.",
+	);
+
+*normalizeDocument = __PACKAGE__->can('normalize');
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'normalizeDocument',
+	"Alias for C<normalize>.",
+	);
+
+sub domConfig
+{
+	state $domConfig = +{};
+	return $domConfig;
+}
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'domConfig',
+	"Ostensibly an object representing settings which will be used when C<normalize> is called. In practise, just returns an empty hashref that you can do with what you like.",
+	);
+
+*renameNode =
+*doctype =
+*inputEncoding =
+*xmlEncoding =
+sub { die "TODO" };
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	$_,
+	"This method is not implemented yet, but will eventually support the functionality defined in DOM Core 3.",
+	) for qw(renameNode doctype inputEncoding xmlEncoding);
 
 package HTML::HTML5::DOM::HTMLCollection;
 
@@ -722,7 +853,7 @@ sub _mk_follow_method
 	no strict 'refs';
 	
 	my ($class, $subname, $via) = @_;
-	$subname ||= 'wm_follow';
+	$subname ||= 'p5_follow';
 	$via     ||= 'href';
 	
 	*{"$class\::$subname"} = sub {
@@ -758,7 +889,7 @@ sub _mk_form_methods
 			}
 			return
 				List::Util::first { $_->nodeName eq 'form' }
-				$self->wm_ancestors;
+				$self->p5_ancestors;
 		};
 		HTML::HTML5::DOMutil::AutoDoc->add(
 			$class,
@@ -798,7 +929,7 @@ sub getElementById
 HTML::HTML5::DOMutil::AutoDoc->add(
 	__PACKAGE__,
 	'getElementById',
-	'The world-famous C<getElementById> method.',
+	'The world-famous C<getElementById> method. The default XML::LibXML implementation of this does not work with HTML::HTML5::Parser documents, because HTML::HTML5::Parser lacks the ability to inform libxml which element to use as an ID. (libxml defaults to xml:id.) This implementation is XPath-based, thus slower.',
 	);
 
 *getElementsById = \&getElementById; # common typo
@@ -898,7 +1029,7 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 	'When called without arguments, serialises the contents of the element (but not the element itself) to a single string. When called with a string argument, parses the string as HTML and uses it to set the content of this element. When possible, attempts to use polyglot HTML (i.e. markup that works as HTML and XHTML).',
 	);
 
-sub wm_ancestors
+sub p5_ancestors
 {
 	my ($self) = @_;
 	my $x = $self->parentNode;
@@ -913,11 +1044,11 @@ sub wm_ancestors
 
 HTML::HTML5::DOMutil::AutoDoc->add(
 	__PACKAGE__,
-	'wm_ancestors',
+	'p5_ancestors',
 	'Returns a (Perl or XML::LibXML::NodeList) list of this element\'s ancestors - i.e. the parentNode, the parentNode of the parentNode, etc.',
 	);
 
-sub wm_contains
+sub p5_contains
 {
 	my ($self, $thing) = @_;
 	my @results = grep {
@@ -929,7 +1060,7 @@ sub wm_contains
 
 HTML::HTML5::DOMutil::AutoDoc->add(
 	__PACKAGE__,
-	'wm_contains',
+	'p5_contains',
 	'Given an argument, returns true if that argument is an element nested within this element.',
 	);
 
@@ -959,8 +1090,87 @@ sub dataset
 HTML::HTML5::DOMutil::AutoDoc->add(
 	__PACKAGE__,
 	'dataset',
-	'Gets a hashref based on C<< data-foo >> attributes.',
+	'Gets a hashref based on C<< data-foo >> attributes. This is currently read-only, but in future may be implemented as a tied hash to allow read/write access.',
 	);
+
+sub XML::LibXML::Node::_p5_numericPath
+{
+	join q{:},
+		map { sprintf('%09d', $_) }
+		map {
+			if (m{^[*]\[(\d+)]$})   { $1; }
+			elsif (m{^[*]$})       { 0; }
+			elsif (m{^$})          { 0; }
+			else                   { 999_999_999 }
+		}
+		split m{/}, (shift)->nodePath;
+}
+
+sub compareDocumentPosition
+{
+	my ($self, $other) = @_;
+	$self->_p5_numericPath cmp $other->_p5_numericPath;
+}
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'compareDocumentPosition',
+	'Compares this node with another based on document order.',
+	);
+
+*getUserData =
+*setUserData =
+sub { die "TODO" };
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	$_,
+	'Not implemented - perhaps never will be. Try C<dataset> instead.',
+	) for qw( getUserData setUserData );
+
+sub getFeature { (shift)->ownerDocument->implementation->getFeature(@_) }
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'getFeature',
+	'Acts as a shortcut for C<< $element->ownerDocument->implementation->getFeature >>.',
+	);
+
+sub isDefaultNamespace { my $self = shift; !$self->lookupNamespacePrefix("".shift) }
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'isDefaultNamespace',
+	'Given a URI, returns true if that is the default namespace prefix.',
+	);
+
+*lookupPrefix = \&XML::LibXML::Augment::Element->can('lookupNamespacePrefix');
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'lookupPrefix',
+	'Alias for C<lookupNamespacePrefix>.',
+	);
+
+sub isSupported { (shift)->ownerDocument->implementation->hasFeature(@_) }
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'isSupported',
+	'Acts as a shortcut for C<< $element->ownerDocument->implementation->hasFeature >>.',
+	);
+
+*schemaTypeInfo =
+*setIdAttribute =
+*setIdAttributeNS =
+*setIdAttributeNode =
+sub { die "TODO" };
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	$_,
+	'Not implemented.',
+	) for qw( schemaTypeInfo setIdAttribute setIdAttributeNS setIdAttributeNode );
 
 package HTML::HTML5::DOM::HTMLUnknownElement;
 
@@ -1422,7 +1632,7 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 	'Returns a list of form-related elements which this form owns. In list context this is a normal Perl list. In scalar context it is a HTML::HTML5::DOM::HTMLFormControlsCollection.',
 	);
 
-sub wm_submittableElements
+sub p5_submittableElements
 {
 	my $self = shift;
 	@_ = ($self, [qw/button input keygen object select textarea/]);
@@ -1431,7 +1641,7 @@ sub wm_submittableElements
 
 HTML::HTML5::DOMutil::AutoDoc->add(
 	__PACKAGE__,
-	'wm_submittableElements',
+	'p5_submittableElements',
 	'Returns a list of form-related elements which this form owns that can potentially cause name=value pairs to be added to the form submission. (e.g. not C<< <fieldset> >>.) In list context this is a normal Perl list. In scalar context it is a HTML::HTML5::DOM::HTMLFormControlsCollection.',
 	);
 
@@ -1452,7 +1662,7 @@ sub submit
 	my ($self, $hashref) = @_;
 
 	my $method = (uc $self->method || 'GET');
-	my $fields = $self->wm_submittableElements->wm_wwwFormUrlencoded($hashref);
+	my $fields = $self->p5_submittableElements->p5_wwwFormUrlencoded($hashref);
 
 	if ($method eq 'GET')
 	{
@@ -1494,10 +1704,10 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 	'Given a name, returns a list of nodes of elements where the @id or @name attribute matches that name. In scalar context this can return a single element if there\'s only one match, or a HTML::HTML5::DOM::RadioNodeList if there is more than one - this is a kinda annoying feature, but it is required for DOM compliance. Best to just call it in list context.',
 	);
 
-sub wm_wwwFormUrlencoded
+sub p5_wwwFormUrlencoded
 {
 	my ($self, $hashref) = @_;
-	my @pairs = $self->wm_wwwFormPairs($hashref);
+	my @pairs = $self->p5_wwwFormPairs($hashref);
 	#use Data::Dumper; print Dumper \@pairs; exit;
 	return
 		join '&',
@@ -1509,18 +1719,18 @@ sub wm_wwwFormUrlencoded
 
 HTML::HTML5::DOMutil::AutoDoc->add(
 	__PACKAGE__,
-	'wm_wwwFormUrlencoded',
+	'p5_wwwFormUrlencoded',
 	'Returns a form-encoded (C<< foo=bar&quux=xyzzy >>) string for the elements on the list.',
 	);
 
-sub wm_wwwFormPairs
+sub p5_wwwFormPairs
 {
 	my ($self, $hashref) = @_;
 	my %remaining = my %HH = %{ $hashref || +{} };
 	my $return = $self->map(sub {
 		my @empty;
-		return @empty unless $_->can('wm_wwwFormPair');
-		my $pair = $_->wm_wwwFormPair;
+		return @empty unless $_->can('p5_wwwFormPair');
+		my $pair = $_->p5_wwwFormPair;
 		return @empty unless $pair;
 		if (exists $hashref->{$pair->[0]})
 		{
@@ -1538,7 +1748,7 @@ sub wm_wwwFormPairs
 
 HTML::HTML5::DOMutil::AutoDoc->add(
 	__PACKAGE__,
-	'wm_wwwFormPairs',
+	'p5_wwwFormPairs',
 	'Returns a list of C<< [$name => $value] >> tuples for the elements on the list.',
 	);
 
@@ -1557,7 +1767,7 @@ sub value
 
 HTML::HTML5::DOMutil::AutoDoc->add(
 	__PACKAGE__,
-	'wm_wwwFormPairs',
+	'p5_wwwFormPairs',
 	'Returns the "value" attribute of the first element which has a "checked" attribute.',
 	);
 
@@ -1589,7 +1799,7 @@ sub profile
 
 HTML::HTML5::DOMutil::AutoDoc->add(
 	__PACKAGE__,
-	'wm_wwwFormPairs',
+	'p5_wwwFormPairs',
 	'Splits the "profile" attribute on whitespace, and returns it as a list of L<URI> objects.',
 	);
 
@@ -1718,7 +1928,7 @@ __PACKAGE__->_mk_form_methods;
 *stepDown =
 	sub { die 'TODO' };
 
-sub wm_wwwFormPair
+sub p5_wwwFormPair
 {
 	my ($self) = @_;
 	if ($self->getAttribute('type') =~ m{^ (checkbox|radio) $}ix)
@@ -1735,7 +1945,7 @@ sub wm_wwwFormPair
 
 HTML::HTML5::DOMutil::AutoDoc->add(
 	__PACKAGE__,
-	'wm_wwwFormPair',
+	'p5_wwwFormPair',
 	'Returns the C<< [$name => $value] >> that would be used when submitting this form element.',
 	);
 

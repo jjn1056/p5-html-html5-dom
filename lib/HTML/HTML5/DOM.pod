@@ -31,7 +31,7 @@ every XML::LibXML method, it is not as fast as using XML::LibXML directly
 HTML::HTML5::DOM implements those parts of the HTML5 DOM which are
 convenient to do so, and also supports a lot of the pre-HTML5 DOM which
 was obsoleted by the HTML5 spec. Additionally a number of DOM extensions
-(methods prefixed with C<wm_>) are provided.
+(methods prefixed with C<p5_>) are provided.
 
 DOM events and event handlers (e.g. C<onclick>) are not supported, and
 are unlikely to be supported in the foreseeable future.
@@ -100,9 +100,26 @@ Experimental method to extend HTML::HTML5::DOM.
 Given a file handle, file name or URL (as a string or L<URI> object),
 parses the file, returning an L<HTML::HTML5::DOM::HTMLDocument> object.
 
+This function uses HTML::HTML5::Parser but you can alternatively use
+XML::LibXML's XML parser:
+
+ my $dom = HTML::HTML5::DOM->parse($fh, using => 'libxml');
+
 =item * C<< parseString >>
 
 As per C<parse>, but parses a string.
+
+=item * C<< createDocument >>
+
+Returns an HTML::HTML5::DOM::HTMLDocument representing a blank page.
+
+=item * C<< createDocumentType >>
+
+Given a qualified name, public identifier (which might be undef) and system
+identifier (also perhaps undef), returns a doctype tag.
+
+This is currently returned as a string, but in an ideal world would be an
+L<XML::LibXML::Dtd> object.
 
 =back
 
