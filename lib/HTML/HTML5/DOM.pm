@@ -197,9 +197,7 @@ sub smart_match
 	($test, $self) = ($self, $test) if $swap;
 	
 	my ($test_name, $test_version) = do {
-		if (ref $test eq 'ARRAY')
-			{ @$test }
-		elsif (blessed $test and $test->isa(__PACKAGE__))
+		if (blessed $test and $test->isa(__PACKAGE__))
 			{ ($test->feature_name, $test->feature_version) }
 		elsif (!ref $test)
 			{ split /\s+/, $test }
@@ -224,6 +222,7 @@ my $me;
 BEGIN { $me = bless {}, __PACKAGE__ }
 
 use DateTime qw//;
+use Scalar::Util qw/blessed/;
 use URI qw//;
 
 sub getDOMImplementation
@@ -232,8 +231,8 @@ sub getDOMImplementation
 }
 
 our @FEATURES = (
-	HTML::HTML5::DOMutil::Feature->new(Core       => '2.0'),
-	HTML::HTML5::DOMutil::Feature->new(XML        => '2.0'),
+	HTML::HTML5::DOMutil::Feature->new(Core       => '3.0'),
+	HTML::HTML5::DOMutil::Feature->new(XML        => '3.0'),
 	HTML::HTML5::DOMutil::Feature->new(XMLVersion => '1.1'),
 	HTML::HTML5::DOMutil::Feature->new(HTML       => '2.0'),
 	HTML::HTML5::DOMutil::Feature->new(XHTML      => '2.0'),
@@ -249,7 +248,7 @@ sub getFeature
 sub hasFeature
 {
 	my $self = shift;
-	my $test = \@_;
+	my $test = blessed $_[0] ? $_[0] : HTML::HTML5::DOMutil::Feature->new(@_);
 	grep { $_ ~~ $test } @FEATURES;
 }
 
@@ -1144,7 +1143,7 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 	'Given a URI, returns true if that is the default namespace prefix.',
 	);
 
-*lookupPrefix = \&XML::LibXML::Augment::Element->can('lookupNamespacePrefix');
+*lookupPrefix = XML::LibXML::Augment::Element->can('lookupNamespacePrefix');
 
 HTML::HTML5::DOMutil::AutoDoc->add(
 	__PACKAGE__,
