@@ -1,3 +1,7 @@
+my $for_the_benefit_of_module_install_metadata = q{
+package HTML::HTML5::DOM;
+};
+
 {	package HTML::HTML5::DOM;
 
 	use 5.010;
