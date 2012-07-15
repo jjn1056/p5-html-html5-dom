@@ -7,7 +7,7 @@ my @packages;
 	open my $module, '<', 'lib/HTML/HTML5/DOM.pm';
 	while (defined (my $line = <$module>))
 	{
-		if ($line =~ m{ ^ \s* package \s* ( HTML::HTML5::DOM:: ([\S]+) ) \s* ; }x)
+		if ($line =~ m{ ^ \s* \{ \s* package \s* ( HTML::HTML5::DOM:: ([\S]+) ) \s* ; }x)
 		{
 			push @packages, [$1, $2];
 		}
@@ -21,5 +21,10 @@ foreach my $p (@sorted)
 	HTML::HTML5::DOMutil::AutoDoc::psay "=item * L<$fullname>";
 	open my $pod, '>', "lib/HTML/HTML5/DOM/${shortname}.pod";
 	print $pod HTML::HTML5::DOMutil::AutoDoc->pod_for($fullname);
+	
+	unless (defined $fullname->AUTHORITY and defined $fullname->VERSION)
+	{
+		HTML::HTML5::DOMutil::AutoDoc::psay "METADATA NOT DEFINED";
+	}
 }
 
