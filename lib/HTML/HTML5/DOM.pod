@@ -61,6 +61,12 @@ Methods that result in hypertext navigation (e.g. clicking a link or
 submitting a form) generally return a L<Web::Magic> object (which is
 basically an HTTP request waiting to happen).
 
+The standard Perl C<isa> method is overridden to support two additional
+calling styles:
+
+  $elem->isa( 'h1' );                 # element tag name
+  $elem->isa( -HTMLHeadingElement );  # DOM interface name
+
 =head2 HTML::HTML5::DOM class methods
 
 While most of the interesting stuff is in L<HTML::HTML5::DOM::HTMLElement>

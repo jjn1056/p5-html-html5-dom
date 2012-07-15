@@ -210,6 +210,26 @@ sub smart_match
 	return 1;
 }
 
+package HTML::HTML5::DOMutil::FancyISA;
+
+use 5.010;
+use strict qw(vars subs);
+use mro 'c3';
+
+sub isa
+{
+	my ($self, $isa) = @_;
+	
+	if ($isa !~ m{::}
+	and $self->SUPER::isa('XML::LibXML::Element')
+	and $self->tagName eq $isa) {
+		return 1;
+	}
+	
+	$isa =~ s/^-/HTML::HTML5::DOM::/;
+	return $self->SUPER::isa($isa);
+}
+
 package HTML::HTML5::DOM;
 
 use 5.010;
@@ -323,6 +343,7 @@ use 5.010;
 use strict qw(vars subs);
 use mro 'c3';
 
+use base qw/HTML::HTML5::DOMutil::FancyISA/;
 use XML::LibXML::Augment 0
 	'-type'  => 'Document',
 	'-names' => ['{'.HTML::HTML5::DOM->XHTML_NS.'}html'];
@@ -639,7 +660,10 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 
 package HTML::HTML5::DOM::HTMLCollection;
 
-use parent qw/XML::LibXML::NodeList/;
+use base qw/
+	XML::LibXML::NodeList
+	HTML::HTML5::DOMutil::FancyISA
+/;
 
 package HTML::HTML5::DOM::HTMLElement;
 
@@ -664,10 +688,10 @@ use XML::LibXML 1.91 qw/:all/;
 use XML::LibXML::Augment 0 -names => [@ELEMENTS];
 use XML::LibXML::QuerySelector 0;
 
+use base qw/HTML::HTML5::DOMutil::FancyISA/;
+
 sub _mk_attribute_accessors
 {
-	no strict 'refs';
-	
 	my ($class, @attribs) = @_;
 	foreach (@attribs)
 	{
@@ -796,8 +820,6 @@ sub _mk_attribute_accessors
 
 sub _mk_url_decomposition
 {
-	no strict 'refs';
-	
 	my ($class, $via, $bits) = @_;
 	$via  ||= 'href';
 	$bits ||= {
@@ -827,8 +849,6 @@ sub _mk_url_decomposition
 
 sub _mk_labels_method
 {
-	no strict 'refs';
-	
 	my ($class, $subname) = @_;
 	$subname ||= 'labels';
 	
@@ -849,8 +869,6 @@ sub _mk_labels_method
 
 sub _mk_follow_method
 {
-	no strict 'refs';
-	
 	my ($class, $subname, $via) = @_;
 	$subname ||= 'p5_follow';
 	$via     ||= 'href';
@@ -870,8 +888,6 @@ sub _mk_follow_method
 
 sub _mk_form_methods
 {
-	no strict 'refs';
-	
 	my ($class, $todo) = @_;
 	$todo ||= sub { 1 };
 	
@@ -1195,8 +1211,7 @@ use mro 'c3';
 
 our @ELEMENTS;
 BEGIN {
-	@ELEMENTS = map { sprintf('{%s}%s', HTML::HTML5::DOM->XHTML_NS, $_) }
-		qw/a/;
+	@ELEMENTS = map { sprintf('{%s}%s', HTML::HTML5::DOM->XHTML_NS, $_) } qw/a/;
 }
 
 use XML::LibXML::Augment 0
@@ -1683,7 +1698,7 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 
 package HTML::HTML5::DOM::HTMLFormControlsCollection;
 
-use parent -norequire => qw/HTML::HTML5::DOM::HTMLCollection/;
+use base qw/HTML::HTML5::DOM::HTMLCollection/;
 use URI::Escape qw//;
 
 sub namedItem
@@ -1753,7 +1768,7 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 
 package HTML::HTML5::DOM::RadioNodeList;
 
-use parent qw/XML::LibXML::NodeList/;
+use base qw/XML::LibXML::NodeList/;
 
 sub value
 {
