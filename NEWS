@@ -25,6 +25,19 @@ NEWS
     not even been attempted yet. But it's my hope that eventually the whole
     HTML5 DOM will be covered.
 
+   Major Features Planned
+    Plans can change.
+
+    *   Lots of methods marked "@@TODO" will be implemented.
+
+    *   W3C RDFa API.
+
+    *   W3C Microdata API.
+
+   Features At Risk
+    *   HTMLFormElement's "submit" method might be better off returning an
+        HTTP::Request object rather than Web::Magic.
+
 SEE ALSO
     "Changes", HTML::HTML5::DOM.
 

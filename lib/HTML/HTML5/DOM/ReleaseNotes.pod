@@ -28,6 +28,37 @@ methods that are only partially implemented. Many more have not even been
 attempted yet. But it's my hope that eventually the whole HTML5 DOM will be
 covered.
 
+=head3 Major Features Planned
+
+Plans can change.
+
+=over
+
+=item *
+
+Lots of methods marked "@@TODO" will be implemented.
+
+=item *
+
+W3C RDFa API.
+
+=item *
+
+W3C Microdata API.
+
+=back
+
+=head3 Features At Risk
+
+=over
+
+=item *
+
+HTMLFormElement's C<submit> method might be better off returning an
+L<HTTP::Request> object rather than L<Web::Magic>.
+
+=back
+
 =head1 SEE ALSO
 
 "Changes", L<HTML::HTML5::DOM>.
