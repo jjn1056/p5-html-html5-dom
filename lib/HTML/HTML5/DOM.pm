@@ -707,15 +707,12 @@ sub _mk_attribute_accessors
 			{
 				my $self = shift;
 				my $i = 1;
-				my %classes =
-					reverse            # ensure that *first* copy of dupes is kept
-					map { $_ => $i++ } # filter out duplicates while preserving order
-					grep { length $_ } # ignore nulls
-					split /\s+/,       # space separated list
+				my %seen;
+				return 
+					grep { not $seen{$_}++ } # filter out duplicates
+					grep { length $_ }       # ignore nulls
+					split /\s+/,             # space separated list
 					$self->getAttribute($xmlname);
-				return
-					sort { $classes{$a} <=> $classes{$b} } # restore order
-					keys %classes;
 			};
 			HTML::HTML5::DOMutil::AutoDoc->add(
 				$class,

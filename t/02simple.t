@@ -1,4 +1,4 @@
-use Test::More tests => 17;
+use Test::More tests => 18;
 use HTML::HTML5::DOM;
 
 my $dom = HTML::HTML5::DOM->parse(\*DATA);
@@ -103,12 +103,23 @@ isa_ok(
 	'HTMLTableElement->createCaption',
 );
 
+is_deeply(
+	[$dom->getElementsByTagName('link')->get_node(1)->relList],
+	[qw< stylesheet holoitem >],
+	'HTMLLinkElement->relList',
+)
+
 __DATA__
 <!doctype html>
 <html>
 	<head profile="http://www.w3.org/1999/xhtml/vocab">
 		<title>The Title</title>
-		<link rel="stylesheet" type="text/css" media="hologram" href="hologram.css">
+		<link
+			rel="stylesheet holoitem holoitem stylesheet"
+			type="text/css"
+			media="hologram"
+			href="hologram.css"
+		>
 	</head>
 	<body>
 		<h1>The Heading</h1>
