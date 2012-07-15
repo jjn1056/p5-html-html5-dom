@@ -75,6 +75,10 @@ handful of methods of its own.
 
 =over
 
+=item * C<< XHTML_NS >>
+
+Constant. The XHTML namespace URI as a string.
+
 =item * C<< getDOMImplementation >>
 
 Gets a singleton object blessed into the HTML::HTML5::DOM class.
@@ -87,6 +91,10 @@ Given a feature and version, returns true if the feature is supported.
   if ($impl->hasFeature('Core', '2.0')) {
     # ... do stuff
   }
+
+=item * C<< getFeature >>
+
+Given a feature and version, returns an HTML::HTML5::DOMutil::Feature object.
 
 =item * C<< registerFeature >>
 
