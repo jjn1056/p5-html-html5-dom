@@ -4,5 +4,16 @@
 	perl_version_from m`HTML::HTML5::DOM`;
 	version_from      m`HTML::HTML5::DOM`;
 	readme_from       m`HTML::HTML5::DOM`;
-	test_requires     p`Test::More 0.61`  .
+	requires          p`Capture::Attribute`;
+	requires          p`DateTime`;
+	requires          p`HTML::HTML5::Parser`;
+	requires          p`HTML::HTML5::Writer`;
+	requires          p`IO::Detect`;
+	requires          p`URI`;
+	requires          p`URI::Escape`;
+	requires          p`Web::Magic`;
+	requires          p`XML::LibXML`;
+	requires          p`XML::LibXML::Augment`;
+	requires          p`XML::LibXML::QuerySelector`;
+	test_requires     p`Test::More 0.61`.
 
