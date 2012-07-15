@@ -38,13 +38,29 @@ HTML::HTML5::DOM::HTMLTableSectionElement inherits methods from the following Pe
 
 =item * L<XML::LibXML::QuerySelector>
 
+=item * L<HTML::HTML5::DOMutil::FancyISA>
+
 =back
 
 =head2 Additional Methods
 
-This class provides no additional methods over those it inherits.
+As well as its inherited methods, this class provides the following methods.
 
-It is mostly pointless, but its existance is required by the HTML DOM.
+=over
+
+=item * C<< deleteRow >>
+
+@@TODO
+
+=item * C<< insertRow >>
+
+@@TODO
+
+=item * C<< rows >>
+
+returns a list of C<< <tr> >> child elements
+
+=back
 
 =head1 BUGS
 

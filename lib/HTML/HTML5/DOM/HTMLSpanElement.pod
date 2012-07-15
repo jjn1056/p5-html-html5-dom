@@ -34,6 +34,8 @@ HTML::HTML5::DOM::HTMLSpanElement inherits methods from the following Perl class
 
 =item * L<XML::LibXML::QuerySelector>
 
+=item * L<HTML::HTML5::DOMutil::FancyISA>
+
 =back
 
 =head2 Additional Methods

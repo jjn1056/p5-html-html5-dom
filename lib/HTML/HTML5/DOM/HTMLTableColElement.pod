@@ -36,6 +36,8 @@ HTML::HTML5::DOM::HTMLTableColElement inherits methods from the following Perl c
 
 =item * L<XML::LibXML::QuerySelector>
 
+=item * L<HTML::HTML5::DOMutil::FancyISA>
+
 =back
 
 =head2 Additional Methods
@@ -46,7 +48,7 @@ As well as its inherited methods, this class provides the following methods.
 
 =item * C<< span >>
 
-Called with no arguments, is a shortcut for C<< $elem->getAttribute("span") >>. Called with a defined argument, acts as C<setAttribute>. Called with undef as an argument, acts as C<removeAttribute>.
+Accessor for the C<< span >> attribute. Must always be a positive integer.
 
 =back
 

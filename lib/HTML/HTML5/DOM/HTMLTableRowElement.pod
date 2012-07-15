@@ -34,13 +34,37 @@ HTML::HTML5::DOM::HTMLTableRowElement inherits methods from the following Perl c
 
 =item * L<XML::LibXML::QuerySelector>
 
+=item * L<HTML::HTML5::DOMutil::FancyISA>
+
 =back
 
 =head2 Additional Methods
 
-This class provides no additional methods over those it inherits.
+As well as its inherited methods, this class provides the following methods.
 
-It is mostly pointless, but its existance is required by the HTML DOM.
+=over
+
+=item * C<< cells >>
+
+returns a list of C<< <th> >> and C<< <td> >> child elements
+
+=item * C<< deleteCell >>
+
+@@TODO
+
+=item * C<< insertCell >>
+
+@@TODO
+
+=item * C<< rowIndex >>
+
+@@TODO
+
+=item * C<< sectionRowIndex >>
+
+@@TODO
+
+=back
 
 =head1 BUGS
 

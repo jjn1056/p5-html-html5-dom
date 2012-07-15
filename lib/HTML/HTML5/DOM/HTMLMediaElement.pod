@@ -32,6 +32,8 @@ HTML::HTML5::DOM::HTMLMediaElement inherits methods from the following Perl clas
 
 =item * L<XML::LibXML::QuerySelector>
 
+=item * L<HTML::HTML5::DOMutil::FancyISA>
+
 =back
 
 =head2 Additional Methods

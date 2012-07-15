@@ -20,6 +20,8 @@ HTML::HTML5::DOM::HTMLDocument inherits methods from the following Perl classes.
 
 =over
 
+=item * L<HTML::HTML5::DOMutil::FancyISA>
+
 =item * L<XML::LibXML::Augment::Document>
 
 =item * L<XML::LibXML::Augment::Node>
@@ -80,7 +82,7 @@ Returns the string 'utf-8'.
 
 =item * C<< doctype >>
 
-This method is not implemented yet.
+This method is not implemented yet, but will eventually support the functionality defined in DOM Core 3.
 
 =item * C<< documentURI >>
 
@@ -102,6 +104,10 @@ Returns all C<< <embed> >> elements found in the document.
 
 Returns all forms found in the document.
 
+=item * C<< getElementById >>
+
+The world-famous C<getElementById> method. The default XML::LibXML implementation of this does not work with HTML::HTML5::Parser documents, because HTML::HTML5::Parser lacks the ability to inform libxml which element to use as an ID. (libxml defaults to xml:id.) This implementation is XPath-based, thus slower.
+
 =item * C<< head >>
 
 Returns the document head.
@@ -116,7 +122,7 @@ Returns the same as HTML::HTML5::DOM->getDOMImplementation.
 
 =item * C<< inputEncoding >>
 
-This method is not implemented yet.
+This method is not implemented yet, but will eventually support the functionality defined in DOM Core 3.
 
 =item * C<< lastModified >>
 
@@ -129,6 +135,10 @@ Returns all C<< <a> >> and C<< <area> >> elements with an "href" attribute found
 =item * C<< normalizeDocument >>
 
 Alias for C<normalize>.
+
+=item * C<< p5_tables >>
+
+Returns all tables found in the document.
 
 =item * C<< plugins >>
 
@@ -144,7 +154,7 @@ Ostensibly returns the HTTP referer for the document, but in this implementation
 
 =item * C<< renameNode >>
 
-This method is not implemented yet.
+This method is not implemented yet, but will eventually support the functionality defined in DOM Core 3.
 
 =item * C<< scripts >>
 
@@ -160,7 +170,7 @@ Returns the document's title, from its C<< <title> >> element, with a little whi
 
 =item * C<< xmlEncoding >>
 
-This method is not implemented yet.
+This method is not implemented yet, but will eventually support the functionality defined in DOM Core 3.
 
 =item * C<< xmlStandalone >>
 

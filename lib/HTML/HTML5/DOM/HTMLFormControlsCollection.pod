@@ -24,6 +24,8 @@ HTML::HTML5::DOM::HTMLFormControlsCollection inherits methods from the following
 
 =item * L<XML::LibXML::NodeList>
 
+=item * L<HTML::HTML5::DOMutil::FancyISA>
+
 =back
 
 =head2 Additional Methods

@@ -34,6 +34,8 @@ HTML::HTML5::DOM::HTMLBRElement inherits methods from the following Perl classes
 
 =item * L<XML::LibXML::QuerySelector>
 
+=item * L<HTML::HTML5::DOMutil::FancyISA>
+
 =back
 
 =head2 Additional Methods

@@ -34,6 +34,8 @@ HTML::HTML5::DOM::HTMLAnchorElement inherits methods from the following Perl cla
 
 =item * L<XML::LibXML::QuerySelector>
 
+=item * L<HTML::HTML5::DOMutil::FancyISA>
+
 =back
 
 =head2 Additional Methods
@@ -65,6 +67,10 @@ Called with no arguments, is a shortcut for C<< $elem->getAttribute("hreflang") 
 =item * C<< media >>
 
 Called with no arguments, is a shortcut for C<< $elem->getAttribute("media") >>. Called with a defined argument, acts as C<setAttribute>. Called with undef as an argument, acts as C<removeAttribute>.
+
+=item * C<< name >>
+
+Called with no arguments, is a shortcut for C<< $elem->getAttribute("name") >>. Called with a defined argument, acts as C<setAttribute>. Called with undef as an argument, acts as C<removeAttribute>.
 
 =item * C<< p5_follow >>
 

@@ -242,8 +242,10 @@ my $me;
 BEGIN { $me = bless {}, __PACKAGE__ }
 
 use DateTime qw//;
+use IO::Detect qw//;
 use Scalar::Util qw/blessed/;
 use URI qw//;
+use Web::Magic qw//;
 
 sub getDOMImplementation
 {
@@ -256,7 +258,7 @@ our @FEATURES = (
 	HTML::HTML5::DOMutil::Feature->new(XMLVersion => '1.1'),
 	HTML::HTML5::DOMutil::Feature->new(HTML       => '2.0'),
 	HTML::HTML5::DOMutil::Feature->new(XHTML      => '2.0'),
-	);
+);
 
 sub getFeature
 {
@@ -292,7 +294,7 @@ sub parse
 {
 	my ($self, $file, %options) = @_;
 	my $pclass = $options{using} =~ /libxml/i ? 'XML::LibXML' : 'HTML::HTML5::Parser';
-	my $dom = (ref $file =~ /^IO\b/)
+	my $dom = IO::Detect::is_filehandle $file
 		? $pclass->new->parse_fh($file)
 		: $pclass->new->parse_file($file);
 	XML::LibXML::Augment->upgrade($dom);
@@ -376,6 +378,7 @@ foreach my $elem (qw/body head/)
 		[ anchors => '//*[local-name()="a" and @name]', 'C<< <a> >> with a "name" attribute' ],
 		[ forms   => '//*[local-name()="form"]',   'forms' ],
 		[ scripts => '//*[local-name()="script"]', 'scripts' ],
+		[ p5_tables => '//*[local-name()="table"]', 'tables' ],
 		);
 	foreach my $x (@things)
 	{
@@ -533,7 +536,7 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 sub title
 {
 	my ($self) = @_;
-	my ($title) = $self->getElementsByTagName('title')->get_index(1)->textContent;
+	my ($title) = $self->getElementsByTagName('title')->get_node(1)->textContent;
 	$title =~ s/\s+/ /g;
 	$title =~ s/(^\s|\s$)//g;
 	return $title;
@@ -1068,7 +1071,7 @@ sub p5_contains
 	my ($self, $thing) = @_;
 	my @results = grep {
 		$_ == $self
-	} $thing->ancestors;
+	} $thing->p5_ancestors;
 	return 1 if @results;
 	return;
 }
@@ -1221,6 +1224,7 @@ use XML::LibXML::Augment 0
 __PACKAGE__->_mk_attribute_accessors(qw/
 	href==URI target rel rev media hreflang target type
 	relList=rel=LIST revList=rev=LIST text==TEXT
+	name
 	/);
 __PACKAGE__->_mk_url_decomposition;
 __PACKAGE__->_mk_follow_method;
@@ -1425,7 +1429,26 @@ use XML::LibXML::Augment 0
 	-names => [@ELEMENTS],
 	-isa   => ['HTML::HTML5::DOM::HTMLElement'];
 
-__PACKAGE__->_mk_attribute_accessors(qw/span/);
+sub span
+{
+	my $self = shift;
+	
+	if (@_)
+	{
+		my $set = shift;
+		int($set) > 0
+			? $self->setAttribute(span => int($set))
+			: $self->removeAttribute('span')
+	}
+	
+	my $span = $self->getAttribute('span');
+	int($span) > 0 ? int($span) : 1;
+}
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	span => 'Accessor for the C<< span >> attribute. Must always be a positive integer.',
+);
 
 package HTML::HTML5::DOM::HTMLCommandElement;
 
@@ -2434,6 +2457,56 @@ use XML::LibXML::Augment 0
 	-names => [@ELEMENTS],
 	-isa   => ['HTML::HTML5::DOM::HTMLElement'];
 
+sub caption
+{
+	my $self  = shift;
+	my ($cap) = $self->getChildrenByTagName('caption');
+	return $cap if $cap;
+	return;
+}
+
+sub createCaption
+{
+	my $self = shift;
+	return $self->caption || do {
+		my $new = XML::LibXML::Element->new('caption');
+		$new->setNamespace($self->namespaceURI, '', 1);
+		$self->insertBefore($new, $self->childNodes->get_node(1));
+		XML::LibXML::Augment->rebless($new);
+		$new;
+	};
+}
+
+sub deleteCaption
+{
+	my $self = shift;
+	my $cap  = $self->caption;
+	$self->removeChild($cap) if $cap;
+	return !!$cap;
+}
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	caption => 'returns the C<< <caption> >> element (if any)',
+);
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	createCaption => 'returns the C<< <caption> >> element, creating one if there is none',
+);
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	deleteCaption => 'delete the C<< <caption> >> element (if any), and returns a boolean indicating whether anything was deleted',
+);
+
+foreach (qw/tHead createTHead deleteTHead tFoot createTFoot deleteTFoot
+	tBodies createTBody rows insertRow deleteRow border/)
+{
+	*$_ = sub { die 'TODO' };
+	HTML::HTML5::DOMutil::AutoDoc->add(__PACKAGE__, $_, '@@TODO - not implemented yet');
+}
+
 package HTML::HTML5::DOM::HTMLTableSectionElement;
 
 use 5.010;
@@ -2450,6 +2523,22 @@ use XML::LibXML::Augment 0
 	-names => [@ELEMENTS],
 	-isa   => ['HTML::HTML5::DOM::HTMLElement'];
 
+sub rows
+{
+	my $self  = shift;
+	return $self->getChildrenByTagName('*')->grep(sub { $_->tagName =~ m{^(tr)$}i });
+}
+
+HTML::HTML5::DOMutil::AutoDoc->add(__PACKAGE__,
+	rows => 'returns a list of C<< <tr> >> child elements'
+);
+
+sub insertRow      { die "TODO" }
+sub deleteRow      { die "TODO" }
+
+HTML::HTML5::DOMutil::AutoDoc->add(__PACKAGE__, $_, '@@TODO')
+	for qw/insertRow deleteRow/;
+
 package HTML::HTML5::DOM::HTMLTableCellElement;
 
 use 5.010;
@@ -2465,6 +2554,32 @@ BEGIN {
 use XML::LibXML::Augment 0
 	-names => [@ELEMENTS],
 	-isa   => ['HTML::HTML5::DOM::HTMLElement'];
+
+__PACKAGE__->_mk_attribute_accessors(
+	qw/rowSpan=rowspan colSpan=colspan/
+	);
+
+sub headers
+{
+	die "TODO";
+}
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'headers',
+	'@@TODO - should return a list of C<< <th> >> elements that act as a header for this cell.',
+);
+
+sub cellIndex
+{
+	die "TODO";
+}
+
+HTML::HTML5::DOMutil::AutoDoc->add(
+	__PACKAGE__,
+	'cellIndex',
+	"\@\@TODO - should return the cell's index within its row.",
+	);
 
 package HTML::HTML5::DOM::HTMLTableDataCellElement;
 
@@ -2498,6 +2613,8 @@ use XML::LibXML::Augment 0
 	-names => [@ELEMENTS],
 	-isa   => ['HTML::HTML5::DOM::HTMLTableCellElement'];
 
+__PACKAGE__->_mk_attribute_accessors(qw/scope/);
+
 package HTML::HTML5::DOM::HTMLTableRowElement;
 
 use 5.010;
@@ -2513,6 +2630,25 @@ BEGIN {
 use XML::LibXML::Augment 0
 	-names => [@ELEMENTS],
 	-isa   => ['HTML::HTML5::DOM::HTMLElement'];
+
+sub rowIndex        { die "TODO" }
+sub sectionRowIndex { die "TODO" }
+sub insertCell      { die "TODO" }
+sub deleteCell      { die "TODO" }
+
+HTML::HTML5::DOMutil::AutoDoc->add(__PACKAGE__, $_, '@@TODO')
+	for qw/sectionRowIndex rowIndex insertCell deleteCell/;
+
+sub cells
+{
+	my $self  = shift;
+	return $self->getChildrenByTagName('*')->grep(sub { $_->tagName =~ m{^(td|th)$}i });
+}
+
+HTML::HTML5::DOMutil::AutoDoc->add(__PACKAGE__,
+	cells => 'returns a list of C<< <th> >> and C<< <td> >> child elements'
+);
+
 
 package HTML::HTML5::DOM::HTMLTextAreaElement;
 

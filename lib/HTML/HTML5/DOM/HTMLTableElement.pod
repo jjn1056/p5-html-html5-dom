@@ -34,13 +34,77 @@ HTML::HTML5::DOM::HTMLTableElement inherits methods from the following Perl clas
 
 =item * L<XML::LibXML::QuerySelector>
 
+=item * L<HTML::HTML5::DOMutil::FancyISA>
+
 =back
 
 =head2 Additional Methods
 
-This class provides no additional methods over those it inherits.
+As well as its inherited methods, this class provides the following methods.
 
-It is mostly pointless, but its existance is required by the HTML DOM.
+=over
+
+=item * C<< border >>
+
+@@TODO - not implemented yet
+
+=item * C<< caption >>
+
+returns the C<< <caption> >> element (if any)
+
+=item * C<< createCaption >>
+
+returns the C<< <caption> >> element, creating one if there is none
+
+=item * C<< createTBody >>
+
+@@TODO - not implemented yet
+
+=item * C<< createTFoot >>
+
+@@TODO - not implemented yet
+
+=item * C<< createTHead >>
+
+@@TODO - not implemented yet
+
+=item * C<< deleteCaption >>
+
+delete the C<< <caption> >> element (if any), and returns a boolean indicating whether anything was deleted
+
+=item * C<< deleteRow >>
+
+@@TODO - not implemented yet
+
+=item * C<< deleteTFoot >>
+
+@@TODO - not implemented yet
+
+=item * C<< deleteTHead >>
+
+@@TODO - not implemented yet
+
+=item * C<< insertRow >>
+
+@@TODO - not implemented yet
+
+=item * C<< rows >>
+
+@@TODO - not implemented yet
+
+=item * C<< tBodies >>
+
+@@TODO - not implemented yet
+
+=item * C<< tFoot >>
+
+@@TODO - not implemented yet
+
+=item * C<< tHead >>
+
+@@TODO - not implemented yet
+
+=back
 
 =head1 BUGS
 

@@ -32,13 +32,33 @@ HTML::HTML5::DOM::HTMLTableCellElement inherits methods from the following Perl 
 
 =item * L<XML::LibXML::QuerySelector>
 
+=item * L<HTML::HTML5::DOMutil::FancyISA>
+
 =back
 
 =head2 Additional Methods
 
-This class provides no additional methods over those it inherits.
+As well as its inherited methods, this class provides the following methods.
 
-It is mostly pointless, but its existance is required by the HTML DOM.
+=over
+
+=item * C<< cellIndex >>
+
+@@TODO - should return the cell's index within its row.
+
+=item * C<< colSpan >>
+
+Called with no arguments, is a shortcut for C<< $elem->getAttribute("colspan") >>. Called with a defined argument, acts as C<setAttribute>. Called with undef as an argument, acts as C<removeAttribute>.
+
+=item * C<< headers >>
+
+@@TODO - should return a list of C<< <th> >> elements that act as a header for this cell.
+
+=item * C<< rowSpan >>
+
+Called with no arguments, is a shortcut for C<< $elem->getAttribute("rowspan") >>. Called with a defined argument, acts as C<setAttribute>. Called with undef as an argument, acts as C<removeAttribute>.
+
+=back
 
 =head1 BUGS
 

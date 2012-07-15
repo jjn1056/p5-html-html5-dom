@@ -22,6 +22,8 @@ HTML::HTML5::DOM::HTMLCollection inherits methods from the following Perl classe
 
 =item * L<XML::LibXML::NodeList>
 
+=item * L<HTML::HTML5::DOMutil::FancyISA>
+
 =back
 
 =head2 Additional Methods
