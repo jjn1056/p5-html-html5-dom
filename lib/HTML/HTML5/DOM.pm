@@ -1,7 +1,7 @@
 package HTML::HTML5::DOMutil::AutoDoc;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 use Capture::Attribute;
@@ -124,7 +124,7 @@ sub _pod_methods :Capture
 
 package HTML::HTML5::DOMutil::Feature;
 
-use common::sense;
+use strict qw(vars subs);
 use Carp qw[carp];
 use Scalar::Util qw[blessed];
 use overload
@@ -213,7 +213,7 @@ sub smart_match
 package HTML::HTML5::DOM;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 use constant XHTML_NS => 'http://www.w3.org/1999/xhtml';
@@ -320,7 +320,7 @@ sub createDocumentType
 package HTML::HTML5::DOM::HTMLDocument;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 use XML::LibXML::Augment 0
@@ -644,7 +644,7 @@ use parent qw/XML::LibXML::NodeList/;
 package HTML::HTML5::DOM::HTMLElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1174,7 +1174,7 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 package HTML::HTML5::DOM::HTMLUnknownElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1190,7 +1190,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLAnchorElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1213,7 +1213,7 @@ __PACKAGE__->_mk_follow_method;
 package HTML::HTML5::DOM::HTMLAreaElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1236,7 +1236,7 @@ __PACKAGE__->_mk_follow_method;
 package HTML::HTML5::DOM::HTMLAudioElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1252,7 +1252,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLMediaElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1273,7 +1273,7 @@ __PACKAGE__->_mk_follow_method('src');
 package HTML::HTML5::DOM::HTMLBaseElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1292,7 +1292,7 @@ __PACKAGE__->_mk_url_decomposition;
 package HTML::HTML5::DOM::HTMLQuoteElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1310,7 +1310,7 @@ __PACKAGE__->_mk_attribute_accessors(qw/cite==URI/);
 package HTML::HTML5::DOM::HTMLBodyElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1326,7 +1326,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLBRElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1342,7 +1342,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLButtonElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1362,7 +1362,7 @@ __PACKAGE__->_mk_form_methods;
 package HTML::HTML5::DOM::HTMLCanvasElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1381,7 +1381,7 @@ __PACKAGE__->_mk_attribute_accessors(qw/height width/);
 package HTML::HTML5::DOM::HTMLTableCaptionElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1397,7 +1397,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLTableColElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1415,7 +1415,7 @@ __PACKAGE__->_mk_attribute_accessors(qw/span/);
 package HTML::HTML5::DOM::HTMLCommandElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1435,7 +1435,7 @@ __PACKAGE__->_mk_attribute_accessors(qw/
 package HTML::HTML5::DOM::HTMLDataListElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1457,7 +1457,7 @@ sub options
 package HTML::HTML5::DOM::HTMLModElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1475,7 +1475,7 @@ __PACKAGE__->_mk_attribute_accessors(qw/cite==URI dateTime=datetime=datetime/);
 package HTML::HTML5::DOM::HTMLDetailsElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1493,7 +1493,7 @@ __PACKAGE__->_mk_attribute_accessors(qw/open==boolean/);
 package HTML::HTML5::DOM::HTMLDivElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1509,7 +1509,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLDListElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1525,7 +1525,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLEmbedElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1543,7 +1543,7 @@ __PACKAGE__->_mk_attribute_accessors(qw/src==URI type height width/);
 package HTML::HTML5::DOM::HTMLFieldSetElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1584,7 +1584,7 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 package HTML::HTML5::DOM::HTMLFormElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1773,7 +1773,7 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 package HTML::HTML5::DOM::HTMLHeadElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1805,7 +1805,7 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 package HTML::HTML5::DOM::HTMLHeadingElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1821,7 +1821,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLHRElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1837,7 +1837,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLHtmlElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1855,7 +1855,7 @@ __PACKAGE__->_mk_attribute_accessors(qw/version/);
 package HTML::HTML5::DOM::HTMLIFrameElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1876,7 +1876,7 @@ __PACKAGE__->_mk_attribute_accessors(
 package HTML::HTML5::DOM::HTMLImageElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1897,7 +1897,7 @@ __PACKAGE__->_mk_follow_method('src');
 package HTML::HTML5::DOM::HTMLInputElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1951,7 +1951,7 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 package HTML::HTML5::DOM::HTMLKeygenElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -1970,7 +1970,7 @@ __PACKAGE__->_mk_form_methods([qw/form/]);
 package HTML::HTML5::DOM::HTMLLabelElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2013,7 +2013,7 @@ HTML::HTML5::DOMutil::AutoDoc->add(
 package HTML::HTML5::DOM::HTMLLegendElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2031,7 +2031,7 @@ __PACKAGE__->_mk_form_methods([qw/form/]);
 package HTML::HTML5::DOM::HTMLLIElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2052,7 +2052,7 @@ sub value
 package HTML::HTML5::DOM::HTMLLinkElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2075,7 +2075,7 @@ __PACKAGE__->_mk_follow_method;
 package HTML::HTML5::DOM::HTMLMapElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2091,7 +2091,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLMenuElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2109,7 +2109,7 @@ __PACKAGE__->_mk_attribute_accessors(qw/label type/);
 package HTML::HTML5::DOM::HTMLMetaElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2127,7 +2127,7 @@ __PACKAGE__->_mk_attribute_accessors(qw/name httpEquiv=http-equiv content scheme
 package HTML::HTML5::DOM::HTMLMeterElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2147,7 +2147,7 @@ __PACKAGE__->_mk_form_methods([qw/form/]);
 package HTML::HTML5::DOM::HTMLObjectElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2169,7 +2169,7 @@ __PACKAGE__->_mk_follow_method('data');
 package HTML::HTML5::DOM::HTMLOListElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2187,7 +2187,7 @@ __PACKAGE__->_mk_attribute_accessors(qw/reversed==boolean start type/);
 package HTML::HTML5::DOM::HTMLOptGroupElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2205,7 +2205,7 @@ __PACKAGE__->_mk_attribute_accessors(qw/disabled==boolean label/);
 package HTML::HTML5::DOM::HTMLOptionElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2221,7 +2221,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLOutputElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2240,7 +2240,7 @@ __PACKAGE__->_mk_form_methods([qw/form/]);
 package HTML::HTML5::DOM::HTMLParagraphElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2256,7 +2256,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLParamElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2274,7 +2274,7 @@ __PACKAGE__->_mk_attribute_accessors(qw/name value/);
 package HTML::HTML5::DOM::HTMLPreElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2290,7 +2290,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLProgressElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2309,7 +2309,7 @@ __PACKAGE__->_mk_labels_method;
 package HTML::HTML5::DOM::HTMLScriptElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2329,7 +2329,7 @@ __PACKAGE__->_mk_attribute_accessors(
 package HTML::HTML5::DOM::HTMLSelectElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2348,7 +2348,7 @@ __PACKAGE__->_mk_form_methods([qw/form/]);
 package HTML::HTML5::DOM::HTMLSourceElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2369,7 +2369,7 @@ __PACKAGE__->_mk_follow_method('src');
 package HTML::HTML5::DOM::HTMLSpanElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2385,7 +2385,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLStyleElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2406,7 +2406,7 @@ __PACKAGE__->_mk_attribute_accessors(
 package HTML::HTML5::DOM::HTMLTableElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2422,7 +2422,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLTableSectionElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2438,7 +2438,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLTableCellElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2454,7 +2454,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLTableDataCellElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2470,7 +2470,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLTableHeaderCellElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2486,7 +2486,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLTableRowElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2502,7 +2502,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLTextAreaElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2521,7 +2521,7 @@ __PACKAGE__->_mk_form_methods([qw/form/]);
 package HTML::HTML5::DOM::HTMLTimeElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2542,7 +2542,7 @@ sub datetime
 package HTML::HTML5::DOM::HTMLTitleElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2560,7 +2560,7 @@ __PACKAGE__->_mk_attribute_accessors(qw/text==TEXT/);
 package HTML::HTML5::DOM::HTMLTrackElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2576,7 +2576,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLUListElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
@@ -2592,7 +2592,7 @@ use XML::LibXML::Augment 0
 package HTML::HTML5::DOM::HTMLVideoElement;
 
 use 5.010;
-use common::sense;
+use strict qw(vars subs);
 use mro 'c3';
 
 our @ELEMENTS;
