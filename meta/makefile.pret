@@ -1,0 +1,8 @@
+# This file provides instructions for packaging.
+
+`HTML-HTML5-DOM`
+	perl_version_from m`HTML::HTML5::DOM`;
+	version_from      m`HTML::HTML5::DOM`;
+	readme_from       m`HTML::HTML5::DOM`;
+	test_requires     p`Test::More 0.61`  .
+
