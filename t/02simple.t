@@ -70,7 +70,7 @@ is(
 my $submit = $dom->forms->get_node(1)->submit;
 isa_ok(
 	$submit,
-	'Web::Magic',
+	'HTTP::Request',
 	"HTMLFormElement->submit",
 );
 
