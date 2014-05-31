@@ -46,7 +46,7 @@ As well as its inherited methods, this class provides the following methods.
 
 =item * C<< data >>
 
-Shortcut for C<< Web::Magic->new(GET => $elem->href) >>
+Shortcut for C<< HTTP::Request->new(GET => $elem->href) >>
 
 =item * C<< form >>
 

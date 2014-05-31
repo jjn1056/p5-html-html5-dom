@@ -62,7 +62,7 @@ Called with no arguments, is a shortcut for C<< $elem->getAttribute("ismap") >>.
 
 =item * C<< src >>
 
-Shortcut for C<< Web::Magic->new(GET => $elem->href) >>
+Shortcut for C<< HTTP::Request->new(GET => $elem->href) >>
 
 =item * C<< useMap >>
 

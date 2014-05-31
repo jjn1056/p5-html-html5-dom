@@ -22,7 +22,6 @@ package HTML::HTML5::DOM;
 	use IO::Detect qw//;
 	use Scalar::Util qw/blessed/;
 	use URI qw//;
-	use Web::Magic qw//;
 
 	sub getDOMImplementation
 	{
@@ -346,11 +345,14 @@ package HTML::HTML5::DOM;
 	use 5.010;
 	use strict qw(vars subs);
 	use mro 'c3';
-
+	
 	BEGIN {
 		$HTML::HTML5::DOMutil::FancyISA::AUTHORITY = 'cpan:TOBYINK';
 		$HTML::HTML5::DOMutil::FancyISA::VERSION   = '0.001';
 	};
+	
+	use Object::AUTHORITY ();
+	*AUTHORITY = \&Object::AUTHORITY::AUTHORITY;
 	
 	sub isa
 	{
@@ -700,8 +702,7 @@ package HTML::HTML5::DOM;
 	use 5.010;
 	use strict;
 	use mro 'c3';
-	use Object::AUTHORITY;
-
+	
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLCollection::AUTHORITY = 'cpan:TOBYINK';
 		$HTML::HTML5::DOM::HTMLCollection::VERSION   = '0.001';
@@ -737,6 +738,7 @@ package HTML::HTML5::DOM;
 	use HTML::HTML5::Writer 0.104;
 	use List::Util 0 qw//;
 	use Scalar::Util 0 qw//;
+	use HTTP::Request 6.00 qw//;
 	use XML::LibXML 1.91 qw/:all/;
 	use XML::LibXML::Augment 0 -names => [@ELEMENTS];
 	use XML::LibXML::QuerySelector 0;
@@ -926,13 +928,13 @@ package HTML::HTML5::DOM;
 		*{"$class\::$subname"} = sub {
 			my $self = shift;
 			my $url  = $self->$via;
-			return Web::Magic->new(GET => "$url");
+			return HTTP::Request->new(GET => "$url");
 		};
 
 		HTML::HTML5::DOMutil::AutoDoc->add(
 			$class,
 			$subname,
-			sprintf('Shortcut for C<< Web::Magic->new(GET => $elem->%s) >>', $via),
+			sprintf('Shortcut for C<< HTTP::Request->new(GET => $elem->%s) >>', $via),
 			);
 	}
 
@@ -1881,14 +1883,15 @@ package HTML::HTML5::DOM;
 
 		if ($method eq 'GET')
 		{
-			return Web::Magic->new($self->action.'?'.$fields)
+			return HTTP::Request->new(GET => $self->action.'?'.$fields)
 		}
 
-		return Web::Magic
-			-> new($self->action)
-			-> set_request_method($method)
-			-> Content_Type($self->enctype || 'application/x-www-form-urlencoded')
-			-> set_request_body($fields);
+		HTTP::Request->new(
+			$method,
+			$self->action,
+			[ 'Content-Type' => $self->enctype || 'application/x-www-form-urlencoded' ],
+			$fields,
+		);
 	}
 
 	HTML::HTML5::DOMutil::AutoDoc->add(
@@ -3269,8 +3272,8 @@ Methods that return a datetime, generally return one blessed into the
 L<DateTime> class.
 
 Methods that result in hypertext navigation (e.g. clicking a link or
-submitting a form) generally return a L<Web::Magic> object (which is
-basically an HTTP request waiting to happen).
+submitting a form) generally return an L<HTTP::Request> object (which
+you can pass to an L<LWP::UserAgent> or L<WWW::Mechanize> instance).
 
 The standard Perl C<isa> method is overridden to support two additional
 calling styles:

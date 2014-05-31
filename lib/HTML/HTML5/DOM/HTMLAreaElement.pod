@@ -78,7 +78,7 @@ Called with no arguments, is a shortcut for C<< $elem->getAttribute("media") >>.
 
 =item * C<< p5_follow >>
 
-Shortcut for C<< Web::Magic->new(GET => $elem->href) >>
+Shortcut for C<< HTTP::Request->new(GET => $elem->href) >>
 
 =item * C<< pathname >>
 

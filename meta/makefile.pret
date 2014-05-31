@@ -11,7 +11,7 @@
 	requires          p`IO::Detect`;
 	requires          p`URI`;
 	requires          p`URI::Escape`;
-	requires          p`Web::Magic`;
+	requires          p`HTTP::Request 6.00`;
 	requires          p`XML::LibXML`;
 	requires          p`XML::LibXML::Augment`;
 	requires          p`XML::LibXML::QuerySelector`;
