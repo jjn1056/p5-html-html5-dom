@@ -9,4 +9,5 @@
 	changeset [
 		item "Methods which returned a Web::Magic object have been altered to return an HTTP::Request object instead."^^Change;
 		item "Avoid smart match; use match::simple instead."^^Update;
+		item "use Dist::Inkt."^^Packaging;
 	].
