@@ -3,16 +3,16 @@
 @prefix : <http://ontologi.es/doap-deps#> .
 
 `HTML-HTML5-DOM`
-	:runtime-requirement   [ :on "Capture::Attribute"^^CpanId ];
-	:runtime-requirement   [ :on "DateTime"^^CpanId ];
-	:runtime-requirement   [ :on "HTML::HTML5::Parser"^^CpanId ];
-	:runtime-requirement   [ :on "HTML::HTML5::Writer"^^CpanId ];
-	:runtime-requirement   [ :on "IO::Detect"^^CpanId ];
-	:runtime-requirement   [ :on "match::simple"^^CpanId ];
-	:runtime-requirement   [ :on "URI"^^CpanId ];
-	:runtime-requirement   [ :on "URI::Escape"^^CpanId ];
-	:runtime-requirement   [ :on "HTTP::Request 6.00"^^CpanId ];
-	:runtime-requirement   [ :on "XML::LibXML 2.00"^^CpanId ];
-	:runtime-requirement   [ :on "XML::LibXML::Augment"^^CpanId ];
-	:runtime-requirement   [ :on "XML::LibXML::QuerySelector"^^CpanId ];
-	:test-requirement      [ :on "Test::More 0.96"^^CpanId ].
+	:runtime-requirement   [ :on "Capture::Attribute"^^:CpanId ];
+	:runtime-requirement   [ :on "DateTime"^^:CpanId ];
+	:runtime-requirement   [ :on "HTML::HTML5::Parser"^^:CpanId ];
+	:runtime-requirement   [ :on "HTML::HTML5::Writer"^^:CpanId ];
+	:runtime-requirement   [ :on "IO::Detect"^^:CpanId ];
+	:runtime-requirement   [ :on "match::simple"^^:CpanId ];
+	:runtime-requirement   [ :on "URI"^^:CpanId ];
+	:runtime-requirement   [ :on "URI::Escape"^^:CpanId ];
+	:runtime-requirement   [ :on "HTTP::Request 6.00"^^:CpanId ];
+	:runtime-requirement   [ :on "XML::LibXML 2.00"^^:CpanId ];
+	:runtime-requirement   [ :on "XML::LibXML::Augment"^^:CpanId ];
+	:runtime-requirement   [ :on "XML::LibXML::QuerySelector"^^:CpanId ];
+	:test-requirement      [ :on "Test::More 0.96"^^:CpanId ].
