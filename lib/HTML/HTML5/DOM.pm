@@ -6,6 +6,7 @@ package HTML::HTML5::DOM;
 
 	use 5.010;
 	use strict qw(vars subs);
+	use match::simple ();
 	use mro 'c3';
 
 	BEGIN {
@@ -47,7 +48,7 @@ package HTML::HTML5::DOM;
 	{
 		my $self = shift;
 		my $test = blessed $_[0] ? $_[0] : HTML::HTML5::DOMutil::Feature->new(@_);
-		grep { $_ ~~ $test } @FEATURES;
+		grep match::simple::match($_, $test), @FEATURES;
 	}
 
 	sub registerFeature
@@ -943,7 +944,7 @@ package HTML::HTML5::DOM;
 		my ($class, $todo) = @_;
 		$todo ||= sub { 1 };
 		
-		if ('form' ~~ $todo)
+		if (match::simple::match('form', $todo))
 		{
 			*{"$class\::form"} = sub
 			{
@@ -967,7 +968,7 @@ package HTML::HTML5::DOM;
 		
 		foreach my $x (qw/Action Enctype Method NoValidate Target/)
 		{
-			next unless lc("form$x") ~~ $todo;
+			next unless match::simple::match(lc("form$x"), $todo);
 			
 			*{"$class\::form$x"} = sub
 			{
@@ -1827,7 +1828,7 @@ package HTML::HTML5::DOM;
 			-> ownerDocument
 			-> getElementsByTagName('*')
 			-> grep(sub {
-					($_->nodeName ~~ $allowed)
+					match::simple::match($_->nodeName, $allowed)
 					&& ($_->form == $self)
 				})
 			-> map(sub { XML::LibXML::Augment->rebless($_) });

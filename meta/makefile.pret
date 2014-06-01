@@ -9,6 +9,7 @@
 	requires          p`HTML::HTML5::Parser`;
 	requires          p`HTML::HTML5::Writer`;
 	requires          p`IO::Detect`;
+	requires          p`match::simple`;
 	requires          p`URI`;
 	requires          p`URI::Escape`;
 	requires          p`HTTP::Request 6.00`;
