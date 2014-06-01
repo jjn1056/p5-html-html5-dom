@@ -10,6 +10,14 @@ For a full change log, see the "Changes" file included in the distribution.
 
 =head1 NEWS
 
+=head2 HTML::HTML5::DOM 0.002
+
+June 2014.
+
+All methods that returned a L<Web::Magic> object (such as
+HTMLFormElement's C<submit> method) now return an L<HTTP::Request>
+object instead.
+
 =head2 HTML::HTML5::DOM 0.001
 
 July 2012.
@@ -48,17 +56,6 @@ W3C Microdata API.
 
 =back
 
-=head3 Features At Risk
-
-=over
-
-=item *
-
-HTMLFormElement's C<submit> method might be better off returning an
-L<HTTP::Request> object rather than L<Web::Magic>.
-
-=back
-
 =head1 SEE ALSO
 
 "Changes", L<HTML::HTML5::DOM>.
@@ -69,7 +66,7 @@ Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
 
 =head1 COPYRIGHT AND LICENCE
 
-This software is copyright (c) 2012 by Toby Inkster.
+This software is copyright (c) 2012, 2014 by Toby Inkster.
 
 This is free software; you can redistribute it and/or modify it under the
 same terms as the Perl 5 programming language system itself.

@@ -8,6 +8,12 @@ DESCRIPTION
     distribution.
 
 NEWS
+  HTML::HTML5::DOM 0.002
+    June 2014.
+
+    All methods that returned a Web::Magic object (such as HTMLFormElement's
+    "submit" method) now return an HTTP::Request object instead.
+
   HTML::HTML5::DOM 0.001
     July 2012.
 
@@ -34,10 +40,6 @@ NEWS
 
     *   W3C Microdata API.
 
-   Features At Risk
-    *   HTMLFormElement's "submit" method might be better off returning an
-        HTTP::Request object rather than Web::Magic.
-
 SEE ALSO
     "Changes", HTML::HTML5::DOM.
 
@@ -45,7 +47,7 @@ AUTHOR
     Toby Inkster <tobyink@cpan.org>.
 
 COPYRIGHT AND LICENCE
-    This software is copyright (c) 2012 by Toby Inkster.
+    This software is copyright (c) 2012, 2014 by Toby Inkster.
 
     This is free software; you can redistribute it and/or modify it under
     the same terms as the Perl 5 programming language system itself.
