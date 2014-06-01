@@ -4,3 +4,9 @@
 	issued  2012-07-15;
 	label   "Initial release".
 
+`HTML-HTML5-DOM 0.002 cpan:TOBYINK`
+	issued  2014-06-01;
+	changeset [
+		item "Methods which returned a Web::Magic object have been altered to return an HTTP::Request object instead."^^Change;
+		item "Avoid smart match; use match::simple instead."^^Update;
+	].

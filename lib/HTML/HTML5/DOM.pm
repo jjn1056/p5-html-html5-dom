@@ -11,7 +11,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::VERSION   = '0.001';
+		$HTML::HTML5::DOM::VERSION   = '0.002';
 	};
 	
 	use constant XHTML_NS => 'http://www.w3.org/1999/xhtml';
@@ -125,7 +125,7 @@ package HTML::HTML5::DOM;
 	
 	BEGIN {
 		$HTML::HTML5::DOMutil::AutoDoc::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOMutil::AutoDoc::VERSION   = '0.001';
+		$HTML::HTML5::DOMutil::AutoDoc::VERSION   = '0.002';
 	};
 
 	use Capture::Attribute;
@@ -251,7 +251,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOMutil::Feature::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOMutil::Feature::VERSION   = '0.001';
+		$HTML::HTML5::DOMutil::Feature::VERSION   = '0.002';
 	};
 	
 	use strict qw(vars subs);
@@ -349,7 +349,7 @@ package HTML::HTML5::DOM;
 	
 	BEGIN {
 		$HTML::HTML5::DOMutil::FancyISA::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOMutil::FancyISA::VERSION   = '0.001';
+		$HTML::HTML5::DOMutil::FancyISA::VERSION   = '0.002';
 	};
 	
 	use Object::AUTHORITY ();
@@ -378,7 +378,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLDocument::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLDocument::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLDocument::VERSION   = '0.002';
 	};
 
 	use base qw/HTML::HTML5::DOMutil::FancyISA/;
@@ -706,7 +706,7 @@ package HTML::HTML5::DOM;
 	
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLCollection::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLCollection::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLCollection::VERSION   = '0.002';
 	};
 	
 	use base qw/
@@ -723,7 +723,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLElement::VERSION   = '0.002';
 	};
 
 	our @ELEMENTS;
@@ -1249,7 +1249,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLUnknownElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLUnknownElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLUnknownElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -1271,7 +1271,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLAnchorElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLAnchorElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLAnchorElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -1300,7 +1300,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLAreaElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLAreaElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLAreaElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -1329,7 +1329,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLAudioElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLAudioElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLAudioElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -1351,7 +1351,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLMediaElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLMediaElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLMediaElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -1378,7 +1378,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLBaseElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLBaseElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLBaseElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -1403,7 +1403,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLQuoteElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLQuoteElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLQuoteElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -1427,7 +1427,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLBodyElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLBodyElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLBodyElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -1449,7 +1449,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLBRElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLBRElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLBRElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -1471,7 +1471,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLButtonElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLButtonElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLButtonElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -1497,7 +1497,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLCanvasElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLCanvasElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLCanvasElement::VERSION   = '0.002';
 	};
 		
 	our @ELEMENTS;
@@ -1521,7 +1521,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLTableCaptionElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLTableCaptionElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLTableCaptionElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -1543,7 +1543,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLTableColElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLTableColElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLTableColElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -1586,7 +1586,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLCommandElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLCommandElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLCommandElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -1612,7 +1612,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLDataListElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLDataListElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLDataListElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -1640,7 +1640,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLModElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLModElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLModElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -1664,7 +1664,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLDetailsElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLDetailsElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLDetailsElement::VERSION   = '0.002';
 	};
 		
 	our @ELEMENTS;
@@ -1688,7 +1688,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLDivElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLDivElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLDivElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -1710,7 +1710,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLDListElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLDListElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLDListElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -1732,7 +1732,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLEmbedElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLEmbedElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLEmbedElement::VERSION   = '0.002';
 	};
 		
 	our @ELEMENTS;
@@ -1756,7 +1756,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLFieldSetElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLFieldSetElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLFieldSetElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -1803,7 +1803,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLFormElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLFormElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLFormElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -1906,7 +1906,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLFormControlsCollection::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLFormControlsCollection::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLFormControlsCollection::VERSION   = '0.002';
 	};
 	
 	use base qw/HTML::HTML5::DOM::HTMLCollection/;
@@ -1987,7 +1987,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::RadioNodeList::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::RadioNodeList::VERSION   = '0.001';
+		$HTML::HTML5::DOM::RadioNodeList::VERSION   = '0.002';
 	};
 		
 	use base qw/XML::LibXML::NodeList/;
@@ -2016,7 +2016,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLHeadElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLHeadElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLHeadElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2054,7 +2054,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLHeadingElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLHeadingElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLHeadingElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2076,7 +2076,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLHRElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLHRElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLHRElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2098,7 +2098,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLHtmlElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLHtmlElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLHtmlElement::VERSION   = '0.002';
 	};
 		
 	our @ELEMENTS;
@@ -2122,7 +2122,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLIFrameElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLIFrameElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLIFrameElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2148,7 +2148,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLImageElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLImageElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLImageElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2175,7 +2175,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLInputElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLInputElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLInputElement::VERSION   = '0.002';
 	};
 		
 	our @ELEMENTS;
@@ -2235,7 +2235,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLKeygenElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLKeygenElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLKeygenElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2260,7 +2260,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLLabelElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLLabelElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLLabelElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2309,7 +2309,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLLegendElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLLegendElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLLegendElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2333,7 +2333,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLLIElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLLIElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLLIElement::VERSION   = '0.002';
 	};
 		
 	our @ELEMENTS;
@@ -2360,7 +2360,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLLinkElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLLinkElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLLinkElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2389,7 +2389,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLMapElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLMapElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLMapElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2411,7 +2411,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLMenuElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLMenuElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLMenuElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2435,7 +2435,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLMetaElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLMetaElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLMetaElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2459,7 +2459,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLMeterElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLMeterElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLMeterElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2485,7 +2485,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLObjectElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLObjectElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLObjectElement::VERSION   = '0.002';
 	};
 
 	our @ELEMENTS;
@@ -2513,7 +2513,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLOListElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLOListElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLOListElement::VERSION   = '0.002';
 	};
 
 	our @ELEMENTS;
@@ -2537,7 +2537,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLOptGroupElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLOptGroupElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLOptGroupElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2561,7 +2561,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLOptionElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLOptionElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLOptionElement::VERSION   = '0.002';
 	};
 		
 	our @ELEMENTS;
@@ -2583,7 +2583,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLOutputElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLOutputElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLOutputElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2608,7 +2608,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLParagraphElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLParagraphElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLParagraphElement::VERSION   = '0.002';
 	};
 		
 	our @ELEMENTS;
@@ -2630,7 +2630,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLParamElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLParamElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLParamElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2654,7 +2654,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLPreElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLPreElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLPreElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2676,7 +2676,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLProgressElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLProgressElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLProgressElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2701,7 +2701,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLScriptElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLScriptElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLScriptElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2727,7 +2727,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLSelectElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLSelectElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLSelectElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2752,7 +2752,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLSourceElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLSourceElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLSourceElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2779,7 +2779,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLSpanElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLSpanElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLSpanElement::VERSION   = '0.002';
 	};
 		
 	our @ELEMENTS;
@@ -2801,7 +2801,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLStyleElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLStyleElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLStyleElement::VERSION   = '0.002';
 	};
 		
 	our @ELEMENTS;
@@ -2827,7 +2827,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLTableElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLTableElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLTableElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2899,7 +2899,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLTableSectionElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLTableSectionElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLTableSectionElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2937,7 +2937,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLTableCellElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLTableCellElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLTableCellElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -2985,7 +2985,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLTableDataCellElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLTableDataCellElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLTableDataCellElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -3007,7 +3007,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLTableHeaderCellElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLTableHeaderCellElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLTableHeaderCellElement::VERSION   = '0.002';
 	};
 		
 	our @ELEMENTS;
@@ -3031,7 +3031,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLTableRowElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLTableRowElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLTableRowElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -3071,7 +3071,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLTextAreaElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLTextAreaElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLTextAreaElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -3096,7 +3096,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLTimeElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLTimeElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLTimeElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -3123,7 +3123,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLTitleElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLTitleElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLTitleElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -3147,7 +3147,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLTrackElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLTrackElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLTrackElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -3169,7 +3169,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLUListElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLUListElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLUListElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
@@ -3191,7 +3191,7 @@ package HTML::HTML5::DOM;
 
 	BEGIN {
 		$HTML::HTML5::DOM::HTMLVideoElement::AUTHORITY = 'cpan:TOBYINK';
-		$HTML::HTML5::DOM::HTMLVideoElement::VERSION   = '0.001';
+		$HTML::HTML5::DOM::HTMLVideoElement::VERSION   = '0.002';
 	};
 	
 	our @ELEMENTS;
