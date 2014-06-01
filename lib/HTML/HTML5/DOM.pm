@@ -172,7 +172,7 @@ package HTML::HTML5::DOM;
 			q{=head1 AUTHOR},
 			q{Toby Inkster E<lt>tobyink@cpan.orgE<gt>.},
 			q{=head1 COPYRIGHT AND LICENCE},
-			q{This software is copyright (c) 2012 by Toby Inkster.},
+			q{This software is copyright (c) 2012, 2014 by Toby Inkster.},
 			q{This is free software; you can redistribute it and/or modify it under the same terms as the Perl 5 programming language system itself.},
 			q{=head1 DISCLAIMER OF WARRANTIES},
 			q{THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.},
@@ -3532,7 +3532,7 @@ Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
 
 =head1 COPYRIGHT AND LICENCE
 
-This software is copyright (c) 2012 by Toby Inkster.
+This software is copyright (c) 2012, 2014 by Toby Inkster.
 
 This is free software; you can redistribute it and/or modify it under the
 same terms as the Perl 5 programming language system itself.
